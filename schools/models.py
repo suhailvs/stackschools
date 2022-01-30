@@ -7,6 +7,24 @@ from django.template.defaultfilters import slugify
 
 
 
+class GeneralSettings(models.Model):
+    key = models.CharField(max_length=50)
+    value = models.CharField(max_length=50)
+
+    def __str__(self) -> str:
+        return f'{self.key}:{self.value}'
+
+
+class AuditEntry(models.Model):
+    action = models.CharField(max_length=64)
+    ip = models.GenericIPAddressField(null=True)
+    username = models.CharField(max_length=256, null=True)
+    log_time = models.DateTimeField(auto_now_add = True)
+
+    def __str__(self):
+        return '{0} - {1} - {2}'.format(self.action, self.username, self.ip)
+
+
 class School(models.Model):
     """
     school_category: {

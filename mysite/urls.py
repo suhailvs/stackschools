@@ -15,8 +15,26 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.utils import timezone
+from django.contrib.sitemaps import GenericSitemap
+from django.contrib.sitemaps import views as sitemaps_views
+
+from schools.models import School
+class CustomDateSitemap(GenericSitemap):
+    def lastmod(self, item):
+        return timezone.datetime(2022, 1, 28, 20, 28, 1, tzinfo=timezone.utc)
+
+my_sitemaps = {
+    'schools': CustomDateSitemap({'queryset': School.objects.order_by('id'),'date_field': None}),
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('schools.urls')),
+
+    path('sitemap.xml', sitemaps_views.index, {'sitemaps': my_sitemaps},
+         name='django.contrib.sitemaps.views.index'),
+    path('sitemap-<section>.xml', sitemaps_views.sitemap, {'sitemaps': my_sitemaps},
+         name='django.contrib.sitemaps.views.sitemap'),
+
 ]

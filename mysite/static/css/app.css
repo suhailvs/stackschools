@@ -1,0 +1,98 @@
+/* pricing.css */
+
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.container {
+  max-width: 960px;
+}
+
+.pricing-header {
+  max-width: 700px;
+}
+
+.card-deck .card {
+  min-width: 220px;
+}
+
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+
+/* end of pricing.css */
+
+.logo {
+  font-family: 'Clicker Script', cursive;
+}
+
+.logo a {
+  color: #212529;
+  text-decoration: none;
+}
+
+footer {
+  font-size: .9rem;
+}
+
+footer a {
+  color: #212529;
+}
+
+.list-group-formset label {
+  display: none;
+}
+
+.list-group-formset .form-group,
+.list-group-formset .invalid-feedback {
+  margin-bottom: 0;
+}
+
+.list-group-formset .form-control {
+  padding: .25rem .5rem;
+  font-size: .875rem;
+  line-height: 1.5;
+  border-radius: .2rem;
+}
+
+.has-danger .radio,
+.has-danger .checkbox {
+  color: #dc3545;
+}
+
+.has-danger .invalid-feedback {
+  display: block;
+}
+
+/* 
+Scroll Bootstrap 4 nav-tabs horizontally
+https://stackoverflow.com/a/50960547/2351696
+
+.tabbable .nav-tabs {
+   overflow-x: auto;
+   overflow-y:hidden;
+   flex-wrap: nowrap;
+}
+.tabbable .nav-tabs .nav-link {
+  white-space: nowrap;
+}
+
+.tabbable .nav-tabs::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 12px;
+}
+
+.tabbable .nav-tabs::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.tabbable .nav-tabs::-webkit-scrollbar-track {
+    background-color: #ccc;
+}
+*/

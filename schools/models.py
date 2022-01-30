@@ -142,7 +142,7 @@ class User(AbstractUser):
       (2, 'teacher'),
     )
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES,default=0)
-    school = models.ForeignKey(School,on_delete=models.CASCADE, related_name='users',null=True,blank=True)
+    # school = models.ForeignKey(School,on_delete=models.CASCADE, related_name='users',null=True,blank=True)
     mobile = models.PositiveBigIntegerField(null=True)
     
     @property

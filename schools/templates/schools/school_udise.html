@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{school.school_name}} - {% endblock %}
+{% block metatitle %}{{school.school_name}} {{school.district }}{% endblock %}
+{% block metadescription %}{{school.school_name}}, {{school.state }}, {{school.district }}{% endblock %}
+
+{% block extracss %}
+<style>
+ #main_div {
+    border: 1px solid #ccc; 
+    padding: 5px;
+    border-radius: 0.25rem;
+}
+.graph_div {
+    border: 1px solid #ccc; 
+    padding: 20px;
+    border-radius: 0.25rem;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+<!-- BREADCRUMB -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'schools:states' %}">India</a></li>
+        <li class="breadcrumb-item"><a
+                href="{% url 'schools:districts' school.state|slugify %}">{{school.state|title}}</a></li>
+        <li class="breadcrumb-item"><a
+                href="{% url 'schools:sub_districts' school.state|slugify school.district|slugify %}">{{school.district|title}}</a>
+        </li>
+        <li class="breadcrumb-item"><a
+                href="{% url 'schools:schools' school.state|slugify school.district|slugify school.block %}">{{school.block|title}}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{school.school_name|title}}</li>
+    </ol>
+</nav>
+
+
+<div id="main_div">
+    <h2>{{school.school_name|title}}</h2>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <p class="lead">UDISE Code: <span class="badge bg-secondary">{{school.udise_code}}</span></p>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <p class="lead">Year Of Establishment: <span class="badge bg-danger">{{school.year_of_establishment}}</span></p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="alert alert-info" role="alert">
+                <h4>Address</h4>
+                <address>
+                    {{school.school_name|title}}<br>
+                    {{school.village|title}} (pincode: {{school.pincode}})<br>
+                    {{school.cluster|title}}<br>
+                    {{school.block|title}}<br>
+                    {{school.district|title}}<br>
+                    {{school.state|title}}. 
+                </address>
+            </div>
+        </div>
+    </div>
+        
+    <div class="graph_div">
+        <p class="lead">Enrolment of the Students</p>
+    <table class="table table-bordered">
+        <tbody>
+            
+            <tr><th>Class</th><th>No. of Students</th></tr>
+
+            <tr><td>Pre-Primary</td><td>{{class_students.0}}</td></tr>
+            <tr><td>I</td><td>{{class_students.1}}</td></tr>
+            <tr><td>II</td><td>{{class_students.2}}</td></tr>
+            <tr><td>III</td><td>{{class_students.3}}</td></tr>
+            <tr><td>IV</td><td>{{class_students.4}}</td></tr>
+            <tr><td>V</td><td>{{class_students.5}}</td></tr>
+            <tr><td>VI</td><td>{{class_students.6}}</td></tr>
+            <tr><td>VII</td><td>{{class_students.7}}</td></tr>
+            <tr><td>VIII</td><td>{{class_students.8}}</td></tr>
+            <tr><td>IX</td><td>{{class_students.9}}</td></tr>
+            <tr><td>X</td><td>{{class_students.10}}</td></tr>
+            <tr><td>XI</td><td>{{class_students.11}}</td></tr>
+            <tr><td>XII</td><td>{{class_students.12}}</td></tr>
+            <tr><th>Total</th><th>{{total_students}}</th></tr>
+        </tbody>
+    </table>
+    <canvas id="myChart" height="200"></canvas>
+</div>
+    <hr>
+    <div class="graph_div">
+    <p class="lead">
+        Total Teachers: <span class="badge bg-info">{{school.total_teachers}}</span><br>
+        Total Students: <span class="badge bg-danger">{{total_students}}</span>
+    </p>
+    <canvas id="donutChart"></canvas>
+</div>
+    <hr>
+
+
+<table class="table table-bordered">
+    <tbody>
+        <tr class="table-active">
+            <th colspan="2">School Profile</th>
+        </tr>
+        
+        <tr>
+            <th>School Category</th>
+            <td>{{school.school_category}}</td>
+        </tr>
+        <tr>
+            <th>School Type</th>
+            <td>{{school.school_type}}</td>
+        </tr>
+        <tr>
+            <th>Class</th>
+            <td><span class="badge bg-dark">{% if school.class_from == 0%}Primary{%else%}{{school.class_from}}{%endif%}</span> to <span class="badge bg-dark">{{school.class_to}}</span></td>
+        </tr>
+        <tr>
+            <th>State Management</th>
+            <td>{{school.state_management}}</td>
+        </tr>
+        <tr>
+            <th>National Management</th>
+            <td>{{school.national_management}}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{{school.status}}</td>
+        </tr>
+        <tr>
+            <th>Location</th>
+            <td>{{school.location}}</td>
+        </tr>
+
+        <tr class="table-active">
+            <th colspan="2">School Facilities</th>
+        </tr>
+        <tr>
+            <th>Building Status</th>
+            <td>{{school.building_status}}</td>
+        </tr>
+        <tr>
+            <th>Boundary Wall</th>
+            <td>{{school.boundary_wall}}</td>
+        </tr>
+        <tr>
+            <th>No of boys toilets</th>
+            <td>{{school.no_of_boys_toilets}}</td>
+        </tr>
+        <tr>
+            <th>No of girls toilets</th>
+            <td>{{school.no_of_girls_toilets}}</td>
+        </tr>
+        <tr>
+            <th>No of cwsn toilets</th>
+            <td>{{school.no_of_cwsn_toilets}}</td>
+        </tr>
+        <tr>
+            <th>Drinking water availability</th>
+            <td>{{school.drinking_water_availability}}</td>
+        </tr>
+        <tr>
+            <th>Hand wash facility</th>
+            <td>{{school.hand_wash_facility}}</td>
+        </tr>
+        <tr>
+            <th>Functional generator</th>
+            <td>{{school.functional_generator}}</td>
+        </tr>
+        <tr>
+            <th>Library</th>
+            <td>{{school.library}}</td>
+        </tr>
+        <tr>
+            <th>Reading corner</th>
+            <td>{{school.reading_corner}}</td>
+        </tr>
+        <tr>
+            <th>Book bank</th>
+            <td>{{school.book_bank}}</td>
+        </tr>
+        <tr>
+            <th>Functional laptop</th>
+            <td>{{school.functional_laptop}}</td>
+        </tr>
+        <tr>
+            <th>Functional desktop</th>
+            <td>{{school.functional_desktop}}</td>
+        </tr>
+        <tr>
+            <th>Functional tablet</th>
+            <td>{{school.functional_tablet}}</td>
+        </tr>
+        <tr>
+            <th>Functional scanner</th>
+            <td>{{school.functional_scanner}}</td>
+        </tr>
+        <tr>
+            <th>Functional printer</th>
+            <td>{{school.functional_printer}}</td>
+        </tr>
+        <tr>
+            <th>Functional LED</th>
+            <td>{{school.functional_led}}</td>
+        </tr>
+        <tr>
+            <th>National Management</th>
+            <td>{{school.functional_digiboard}}</td>
+        </tr>
+        <tr>
+            <th>Functional digiboard</th>
+            <td>{{school.internet}}</td>
+        </tr>
+        <tr>
+            <th>Internet</th>
+            <td>{{school.dth}}</td>
+        </tr>
+        <tr>
+            <th>DTH</th>
+            <td>{{school.functional_web_cam}}</td>
+        </tr>
+
+
+        </tbody>
+    </table>
+    <hr>
+    <div class="graph_div">
+    <p class="lead">
+        Class Rooms: <span class="badge bg-warning">{{school.class_rooms}}</span><br>
+        Other Rooms: <span class="badge bg-info">{{school.other_rooms}}</span></span>
+    </p>
+    <canvas id="donutChart2"></canvas>
+</div>
+    <!-- <tr class="table-active">
+        <th colspan="4">basic_details</th>
+    </tr>
+    <tr>
+        <th>aff_board_sec</th>
+        <td>{{school.aff_board_sec}}</td>
+        <th>aff_board_hsec</th>
+        <td>{{school.aff_board_hsec}}</td>
+    </tr>
+    <tr>
+        <th>year_of_establishment</th>
+        <td>{{school.year_of_establishment}}</td>
+        <th>pre_primary</th>
+        <td>{{school.pre_primary}}</td>
+    </tr> -->
+</div>
+
+
+
+{% endblock %}
+
+
+{% block extrajs %}
+<script src="{% static 'chart.min.js' %}"></script>
+<script>
+    const students_data = {
+        labels: ['Pre-Primary', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'],
+        datasets: [{
+            label: 'Number of students.',
+            backgroundColor: '#7cb5ec',
+            data: {{ class_students }},
+  }]
+};
+    const myChart = new Chart(document.getElementById('myChart'), { type: 'bar', data: students_data, options: {} });
+
+    const teachers_students_data = {
+        labels: ['Students','Teachers',],
+        datasets: [{
+            label: 'Teacher vs Students Graph',
+            data: [{{total_students}}, {{school.total_teachers}}],
+            backgroundColor: ['rgb(255, 99, 132)','rgb(54, 162, 235)',],
+            hoverOffset: 4
+        }]
+    };
+    const donutChart = new Chart(document.getElementById('donutChart'), { type: 'doughnut', data: teachers_students_data, options: {} });
+
+    
+
+    const class_rooms = {
+        labels: ['Class Rooms','Other Rooms',],
+        datasets: [{
+            label: 'Class Rooms vs Other Rooms Graph',
+            data: [{{school.class_rooms}}, {{school.other_rooms}}],
+            backgroundColor: ['rgb(255, 205, 86)','rgb(54, 162, 235)',],
+            hoverOffset: 4
+        }]
+    };
+    
+    const donutChart2 = new Chart(document.getElementById('donutChart2'), { type: 'doughnut', data: class_rooms, options: {} });
+
+</script>
+{% endblock %}

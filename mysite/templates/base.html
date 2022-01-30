@@ -1,0 +1,84 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">    
+    <meta name="author" content="suhail vs">
+    
+    <meta name="domain" content="stackschools.com"/>
+    <meta name="title" content="{% block metatitle %}Schools of India{% endblock %}" />
+
+    <meta name="description" content="{% block metadescription %}{% endblock %}"/>
+    <meta name="url" content="{% block metaurl %}https://stackschools.com/{% endblock %}" />
+
+    <title>{% block title %}{% endblock %} - Stack Schools</title>
+    <link rel="icon" href="{% static 'img/favicon.png' %}">
+    
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static 'bootstrap5/bootstrap.css' %}">
+    <!-- Custom styles for this template -->  
+    <style>
+      .container {
+      max-width: 800px;
+    }
+    </style>
+    {% block extracss %}{% endblock %}
+    
+    {% if user.is_authenticated %}
+      <!-- No Google Analytics(user logged in) -->
+    {% else %}
+      {# google_analytics_status as google_analytics_status_flag #}
+      {% if google_analytics_status_flag %}
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-46729046-5"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-46729046-5');
+        </script>
+      {% else %}
+        <!-- No Google Analytics(google_analytics_status false) -->
+      {% endif %}
+    {% endif %}
+  </head>
+
+  <body>
+    <nav class="navbar navbar-light bg-light border-bottom">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'schools:states' %}">
+          <img src="{% static 'img/stackschools.svg' %}" alt="" width="30" height="24" class="d-inline-block align-text-top">
+          StackSchools
+        </a>
+        <div class="col-md-3 text-end">
+          <a class="btn btn-primary me-2" href="{% url 'schools:states' %}">Login</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-3">
+    {% block content %}
+    {% endblock %}
+     
+
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <p class="col-md-4 mb-0 text-muted">© 2021 StackSchools, Donams</p>
+        <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            <img src="{% static 'img/stackschools.svg' %}" width="30" height="30" class="d-inline-block align-top mr-2" alt="">
+        </a>
+    
+      </footer>
+    </div>
+
+
+    <!-- JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static 'jquery/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap5/bootstrap.bundle.min.js' %}"></script>
+    {% block extrajs %}
+    {% endblock %}
+  </body>
+</html>

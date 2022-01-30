@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Schools of {{state|title}}{% endblock %}
+{% block metadescription %}{% for district in districts %}Schools of {{district.district|title}}, {{state|title}}. {% endfor %}{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'schools:states' %}">India</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{state|title}}</li>
+  </ol>
+</nav>
+
+<!--http://103.251.43.156/schoolfixation/index.php/Publicview/ -->
+<div class="row">
+  <div class="col-sm-12 col-md-6">
+    <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+        <strong><small>Districts (Schools:{{total_schools}})</small></strong>
+      </li>
+      {% for district in districts %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <small>{{forloop.counter}}. <a
+            href="{% url 'schools:sub_districts' state district.district %}">{{district.district|title}}</a></small>
+        <span class="badge bg-primary rounded-pill">{{district.count}}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

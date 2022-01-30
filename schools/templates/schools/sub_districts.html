@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Schools of {{district|title}}, {{state|title}}{% endblock %}
+{% block metadescription %}{% for sub_district in sub_districts %}Schools of {{sub_district.block|title}}, {{state|title}}. {% endfor %}{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="{% url 'schools:states' %}">India</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'schools:districts' state %}">{{state|title}}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{district|title}}</li>
+  </ol>
+</nav>
+
+<div class="row">
+	<div class="col-sm-12 col-md-6">
+	  <ul class="list-group">
+		<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+		  <strong><small>Sub Districts</small></strong>
+		</li>
+		{% for sub_district in sub_districts %}
+		<li class="list-group-item d-flex justify-content-between align-items-center">
+		  <small>{{forloop.counter}}. <a href="{% url 'schools:schools' state district sub_district.block %}">{{sub_district.block|title}}</a></small>
+		  <span class="badge bg-primary rounded-pill">{{sub_district.count}}</span>
+		</li>
+		{% endfor %}
+	  </ul>
+	</div>
+  </div>
+
+{% endblock %}

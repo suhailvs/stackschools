@@ -1,0 +1,286 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{school.name}} - {% endblock %}
+{% block metatitle %}{{school.name}} {{school.district }}{% endblock %}
+{% block metadescription %}{{school.name}}, {{school.sub_district }}, {{school.district }}{% endblock %}
+
+{% block extracss %}
+  {% if school.location or school.lat %}
+    <!-- <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet"/> -->
+    <link href="{% static 'leaflet/leaflet.css' %}" rel="stylesheet"/>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+
+{% comment %}
+<nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'schools:districts' %}">Districts</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'schools:sub_districts' school.district %}">{{school.district}}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'schools:schools' school.district school.sub_district %}">{{school.sub_district}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{school.name}}</li>
+      </ol>
+    </nav>
+{% endcomment %}
+<!-- School info -->
+<div class="card">
+  <div class="card-header"> 
+    <h2>{{school.name}}</h2>
+    <!-- <a href="http://103.251.43.156/schoolfixation/index.php/Publicview/index/schoolsdetails/{{school.url_id}}">{{school.name}}</a> -->
+  </div>
+  <div class="card-body">
+    {% if school.img_src %}
+    <img src="https://schoolwiki.in{{school.img_src}}" class="img-thumbnail" alt="Image of {{school.name}}" style="height:300px"><hr>
+    {% endif %}
+
+    <div class="row">
+      <div class="col-md-7">
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-dark">Head Master: <strong>{{school.headmaster_name}}</strong></li>
+          <li class="list-group-item list-group-item-dark">HS Section Phone: <strong>{{school.hs_phone}}</strong></li>
+          <li class="list-group-item list-group-item-dark">HS Section Email: <strong>{{school.hs_email}}</strong></li>
+          {% if school.hse_phone %}
+          <li class="list-group-item list-group-item-dark">HSE Section Phone: <strong>{{school.hse_phone}}</strong></li>
+          <li class="list-group-item list-group-item-dark">HSE Section Email: <strong>{{school.hse_email}}</strong></li>
+          {% endif %}
+          {% if school.website %}
+          <li class="list-group-item list-group-item-dark">School Website: <strong><a href="#" onclick="window.open('{{school.website}}', '_blank');" class="card-link">{{school.website}}</a></strong></li>
+          {% endif %}
+        </ul>
+      </div>
+      <div class="col-md-5">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Address</h5>
+            <p class="text-info">{{school.mal_address|safe}}</p>
+            <a href="{{school.location}}" class="card-link">View on Google Map</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    
+
+    {% if school.lat or school.location %}
+      <div id="osm-map" style="height: 280px;"></div><hr>
+    {% endif %}
+
+    <div class="table-responsive">
+    <table class="table table-bordered table-sm">
+      <thead>
+        <tr>
+          <th>School Code</th>
+          <th>District</th>
+          <th>Educational District</th>
+          <th>Sub District</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{school.code }} </td>
+          <td>{{school.district }} </td>
+          <td>{{school.edu_district }} </td>
+          <td>{{school.sub_district }} </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+<hr>
+
+<!-- Basic School info -->
+<div class="card">
+  <div class="card-header"> <strong>Basic School Information: </strong></div>
+  <div class="card-body">
+    
+    <table class="table table-bordered table-sm">        
+      <tbody>
+        <!-- <tr>
+          <td>School Establishment Date:</td>
+          <td>{{school.basic_info.establish_date}}</td>            
+        </tr> -->
+        <tr>
+          <td>Total School Area:</td>
+          <td>{{school.basic_info.area }}</td>            
+        </tr>
+        <tr>
+          <td>Total No. of Rooms:</td>
+          <td>{{school.basic_info.rooms}} </td>            
+        </tr>
+        <tr>
+          <td>Total Teaching Staff:</td>
+          <td>{{school.basic_info.teaching_staffs}}</td>
+        </tr>
+        <tr>
+          <td>Total Non-Teaching Staff:</td>  
+          <td>{{school.basic_info.non_teaching_staffs}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<hr>
+<div class="card">
+  <div class="card-header"> <strong>Employee Details </strong></div>
+  <div class="card-body">
+    <div class="table-responsive">
+    <table class="table table-bordered table-sm">
+      <thead>
+        <tr>
+          <th>Sl No.</th>
+          <th>Name of Employee</th>
+          <th>Designation</th>
+          <th>Date of Joining</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for staff in school.staffs.all %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{staff.name}} </td>
+          <td>{{staff.designation}} </td>
+          <td>{{staff.date_of_join}} </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+<!-- 
+Class Wise School Strength 
+<div class="card">
+  <div class="card-header"> <strong>Class Wise Student Strength 2014-15: </strong></div>
+  <div class="card-body">
+    <div class="table-responsive">
+    <table class="table table-bordered table-sm">
+      <thead>
+        <tr>
+          <th>Class</th>
+          <th>Strength(2014 - 2015) Based on Sixth Working day:</th>
+          <th>Strength(2014 - 2015) Based on Sampoorna</th>
+          <th>Total available UID:</th>
+          <th>Valid UID:</th>
+          <th>Partialy Match UID:</th>
+          <th>Invalid UID:</th>
+          <th>None</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in school.studentstrength.all %}
+        <tr>
+          <td>{{student.course}} </td>
+          <td>{{student.strength}} </td>
+          <td>{{student.sampoorna}} </td>
+          <td>{{student.available_uid}} </td>
+          <td>{{student.valid_uid}} </td>
+          <td>{{student.partialy_match_uid}} </td>
+          <td>{{student.invalid_uid}} </td>
+          <td>{{student.none}} </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+<hr>
+
+
+
+Class Wise School Strength
+<div class="card">
+  <div class="card-header"> <strong>Staff Fixation Strength Details </strong></div>
+  <div class="card-body">
+    <table class="table table-bordered table-sm">
+      <thead>
+        <tr>
+          <th>Designation Name</th>
+          <th>Strength</th>
+          <th>Year</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for staff in school.staffstrength.all %}
+        <tr>
+          <td>{{staff.designation}}</td>
+          <td>{{staff.strength}} </td>
+          <td>{{staff.year}} </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<hr>
+Class Wise School Strength
+<div class="card">
+  <div class="card-header"> <strong>Employee Details </strong></div>
+  <div class="card-body">
+    <div class="table-responsive">
+    <table class="table table-bordered table-sm">
+      <thead>
+        <tr>
+          <th>Sl No.</th>
+          <th>Name of Employee</th>
+          <th>Designation</th>
+          <th>Date of Joining</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for staff in school.staffs.all %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{staff.name}} </td>
+          <td>{{staff.designation}} </td>
+          <td>{{staff.date_of_join}} </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+  -->
+
+{% endblock %}
+
+
+{% block extrajs %}
+
+{% if school.location or school.lat %}
+<!--https://stackoverflow.com/a/41753557/2351696-->
+
+<!-- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script> -->
+<script src="{% static 'leaflet/leaflet.js' %}"></script>
+<script>
+// Create Leaflet map on map element.
+let map = L.map(document.getElementById('osm-map'));
+
+// Add OSM tile layer to the Leaflet map.
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+// Target's GPS coordinates.
+// let target = L.latLng({{school.lat}}, {{school.lon}});
+{% if school.location %}
+  // use data scraped from https://sametham.kite.kerala.gov.in/20001
+  let target = L.latLng({{school.get_location.0}}, {{school.get_location.1}});
+{% else %}
+  // use data scraped from https://schoolwiki.in/index.php?title=20001
+  let target = L.latLng({{school.lat}}, {{school.lon}});
+{% endif %}
+
+// Set map's center to target with zoom 14.
+map.setView(target, 14);
+
+// Place a marker on the same location.
+L.marker(target).addTo(map);
+</script>
+{% endif %}
+
+{% endblock %}
+

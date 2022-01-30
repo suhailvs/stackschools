@@ -20,9 +20,11 @@ from django.contrib.sitemaps import GenericSitemap
 from django.contrib.sitemaps import views as sitemaps_views
 
 from schools.models import School
+
 class CustomDateSitemap(GenericSitemap):
     def lastmod(self, item):
-        return timezone.datetime(2022, 1, 28, 20, 28, 1, tzinfo=timezone.utc)
+        return timezone.datetime(2021, 12, 20, 20, 28, 1, tzinfo=timezone.utc)
+
 
 my_sitemaps = {
     'schools': CustomDateSitemap({'queryset': School.objects.order_by('id'),'date_field': None}),

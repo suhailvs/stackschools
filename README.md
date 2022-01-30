@@ -41,7 +41,7 @@ Create virtual and install django:
 	$ pip install -r requirements.txt
 	$ mkdir media
 	$ chown www-data:www-data media
-	$ cp .env.example .env # update it
+	$ cp .env.sample .env # update it
 	$ ./manage.py collectstatic
 
 
@@ -119,28 +119,9 @@ create database schools;
 update pg_database set encoding = pg_char_to_encoding('UTF8') where datname = 'schools';
 ```
 
-## Initialization
 
-### migrate:
+**migrate:**
 
     ./manage.py migrate
-
-### Load Fixtures
-
-For loading full fixtures read `schools/fixtures/README.md` or you can skip this.
-
-Load subjects and syllabus: `./manage.py loaddata subjects_syllabus`
-
-Fixture for Create Admin User(suhail412), Demo School, Teacher, students, attendance, exams, markentry for that school::
-    
-    ./manage.py loaddata demoschool.json
-
-
-## New School Process
-
-#### Create School
-
-+ On Incognito window, Login as admin. then create an school and teacher <http://127.0.0.1:8000/admin/schools/school/add_new_school/>
-+ Login as Teacher and create an active **academic year**
 
 	

@@ -19,7 +19,7 @@ from django.utils import timezone
 from django.contrib.sitemaps import GenericSitemap
 from django.contrib.sitemaps import views as sitemaps_views
 from django.views.generic import TemplateView
-from schools.models import School
+from schools.models import School, KeralaSchool
 
 class CustomDateSitemap(GenericSitemap):
     def lastmod(self, item):
@@ -28,6 +28,7 @@ class CustomDateSitemap(GenericSitemap):
 
 my_sitemaps = {
     'schools': CustomDateSitemap({'queryset': School.objects.order_by('id'),'date_field': None}),
+    'kerala_schools': CustomDateSitemap({ 'queryset': KeralaSchool.objects.order_by('id'),'date_field': None})
 }
 
 urlpatterns = [

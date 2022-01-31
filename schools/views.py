@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.db.models import Count
 
-from .models import School
+from .models import School, KeralaSchool
 # Create your views here.
 
 def states(request):
@@ -54,3 +54,8 @@ def school_view(request,code):
     context['total_students']=sum(context['class_students'])
     
     return render(request,'schools/school_udise.html',context)
+
+
+def school_view_kerala(request,code):
+    # kerala school
+    return render(request,'schools/school.html',{'school':KeralaSchool.objects.get(code = code)})

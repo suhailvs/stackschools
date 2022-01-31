@@ -1,4 +1,5 @@
 {% load static %}
+{% load schools_tags %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -28,7 +29,7 @@
     {% if user.is_authenticated %}
       <!-- No Google Analytics(user logged in) -->
     {% else %}
-      {# google_analytics_status as google_analytics_status_flag #}
+      {% google_analytics_status as google_analytics_status_flag %}
       {% if google_analytics_status_flag %}
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-46729046-5"></script>

@@ -18,7 +18,7 @@ from django.urls import include, path
 from django.utils import timezone
 from django.contrib.sitemaps import GenericSitemap
 from django.contrib.sitemaps import views as sitemaps_views
-
+from django.views.generic import TemplateView
 from schools.models import School
 
 class CustomDateSitemap(GenericSitemap):
@@ -32,7 +32,8 @@ my_sitemaps = {
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('schools.urls')),
+    path('', TemplateView.as_view(template_name="home.html")),
+    path('schools/', include('schools.urls')),
 
     path('sitemap.xml', sitemaps_views.index, {'sitemaps': my_sitemaps},
          name='django.contrib.sitemaps.views.index'),

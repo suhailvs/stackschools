@@ -153,6 +153,51 @@ class School(models.Model):
         return f"{url}{slugify(self.school_name)[:60]}"
 
 
+
+
+class KeralaSchool(models.Model):
+    
+    name = models.CharField(max_length=200)
+    code = models.IntegerField(unique=True)
+    district = models.CharField(max_length=30)
+    edu_district = models.CharField(max_length=30)
+    sub_district = models.CharField(max_length=30)
+    url_id = models.IntegerField(blank =True, null = True)
+    # created_on = models.DateTimeField(auto_now_add = True)
+
+    # # new fields on 11/oct/2021
+    # updated_at = models.DateTimeField(blank=True, null=True)
+    hs_phone = models.CharField(max_length=30, blank=True)
+    hse_phone = models.CharField(max_length=30, blank=True)
+    hs_email = models.CharField(max_length=200, blank=True)
+    hse_email = models.CharField(max_length=200, blank=True)
+    headmaster_name = models.CharField(max_length=200, blank=True)
+    
+    # use data scraped from https://schoolwiki.in/index.php?title=20001
+    lat = models.CharField(max_length=30, blank=True)
+    lon = models.CharField(max_length=30, blank=True)
+    # use data scraped from https://sametham.kite.kerala.gov.in/20001
+    location = models.CharField(max_length=200, blank=True)
+    
+    img_src = models.TextField(blank=True)
+    mal_address = models.TextField(blank=True)
+    website = models.CharField(max_length=200, blank=True)
+
+    def __str__(self):
+        return self.name
+    
+    def get_location(self):
+        """Get latitude and longitude from url"""
+        startswith = 'http://maps.google.com/maps?q='
+        if self.location.startswith(startswith):
+            # http://maps.google.com/maps?q=10.795691,76.070796000000001
+            return self.location.replace(startswith,'').split(',')
+    
+    def get_absolute_url(self):
+
+        url = reverse('schools:school_view_kerala', kwargs={'code' : self.code})
+        return f"{url}{slugify(self.name)[:60]}"
+
 class User(AbstractUser):
     USER_TYPE_CHOICES = (
       (0, 'others'), #admin, superadmin etc, so ./manage.py createsuperuser will return default

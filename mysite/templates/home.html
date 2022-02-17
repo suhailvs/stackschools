@@ -1,35 +1,102 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Schools of India{% endblock %}
+{% block title %}Schools in India | List of Govt and Private Schools in India | State Wise School List{% endblock %}
+{% block metadescription %}Schools in India | List of Govt and Private Schools in India | State Wise List of Schools in India | Schools Contact details in India{% endblock %}
+
+{% block extracss %}
+<style>
+    body {
+        /* background-color: #eee; */
+        /* font-family: "Poppins", sans-serif; */
+        font-weight: 300
+    }
+.height {
+    height: 100vh
+}
+
+.search {
+    position: relative;
+    box-shadow: 0 0 40px rgba(51, 51, 51, .1)
+}
+
+.search input {
+    height: 60px;
+    text-indent: 25px;
+    border: 2px solid #d6d4d4
+}
+
+.search input:focus {
+    box-shadow: none;
+    border: 2px solid blue
+}
+
+.search .fa-search {
+    position: absolute;
+    top: 20px;
+    left: 16px
+}
+
+.search button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    height: 50px;
+    width: 110px;
+    background: blue
+}
+</style>
+{% endblock %}
+
 {% block content %}
-Hi! Welcome to stackschools. Browse <a href="{% url 'schools:states' %}">states</a>
+<div class="row d-flex justify-content-center align-items-center">
+    <div class="col-md-8">
+        <div class="search"> 
+            <form method="get" action=".">
+                <input type="text" class="form-control" value="{{request.GET.school_name}}" pattern=".{3,}" title="3 characters minimum" required name="school_name" placeholder="Name of School/Location"> 
+                <button type="submit" class="btn btn-primary">Search</button> 
+            </form>
+        </div>
+    </div>
+</div>
 
-
-<canvas id="myChart" height="400"></canvas>
+<p style="text-align: center;">or you can browse <a href="{% url 'schools:states' %}">states</a></p>
+<!-- <canvas id="myChart" height="300"></canvas> -->
+<hr>
+<ol class="list-group list-group-numbered list-group-flush"></ol>
+{% for school in schools %}
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+        <div class="fw-bold">
+            <a href="{% url 'schools:school_view' school.udise_code %}{{school.school_name|slugify|truncatechars:60}}">
+            <small>{{school.school_name|title}}</small>
+            </a>
+        </div>
+        <small>udise code:
+        <span class="badge bg-secondary rounded-pill">{{school.udise_code}}</span></small>
+        </div>
+    </li>
+    {% endfor %}
+</ol>
+        
 {% endblock %}
 
 
 {% block extrajs %}
+<!--
 <script src="{% static 'chart.min.js' %}"></script>
 <script>
     const students_data = {
         labels: [{% for state in states%}'{{state.state}}',{% endfor %}], // ['Pre-Primary', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'],
         datasets: [{
-            label: 'Number of students in state.',
+            label: 'Number of schools in state.',
             backgroundColor: '#7cb5ec',
             data: [{% for state in states%}'{{state.count}}',{% endfor %}] // [60, 15, 10, 19, 13, 15, 12, 9, 10, 0, 0, 0, 0],
   }]
 };
 const myChart = new Chart(document.getElementById('myChart'), { 
-    type: 'bar', 
-    data: students_data, 
-    options: {
-        // onClick: function(c,i) {
-        //     console.log(c);
-        //     console.log(i);
-        // }
-    } 
+    type: 'bar', data: students_data, options: {} 
 });
-</script>
 
+</script>
+-->
 {% endblock %}

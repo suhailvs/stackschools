@@ -5,6 +5,10 @@ from django.db.models import Count
 from .models import School, KeralaSchool
 # Create your views here.
 
+def home(request):
+    states_and_count = School.objects.values('state').distinct().annotate(count=Count('state'))
+    return render(request,'home.html',{'states':states_and_count})
+
 def states(request):
 
     # states with school count

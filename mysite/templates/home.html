@@ -1,5 +1,35 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Schools of India{% endblock %}
 {% block content %}
-Hi! Welcome to <a href="{% url 'schools:states' %}">stackschools</a>
+Hi! Welcome to stackschools. Browse <a href="{% url 'schools:states' %}">states</a>
+
+
+<canvas id="myChart" height="400"></canvas>
+{% endblock %}
+
+
+{% block extrajs %}
+<script src="{% static 'chart.min.js' %}"></script>
+<script>
+    const students_data = {
+        labels: [{% for state in states%}'{{state.state}}',{% endfor %}], // ['Pre-Primary', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'],
+        datasets: [{
+            label: 'Number of students in state.',
+            backgroundColor: '#7cb5ec',
+            data: [{% for state in states%}'{{state.count}}',{% endfor %}] // [60, 15, 10, 19, 13, 15, 12, 9, 10, 0, 0, 0, 0],
+  }]
+};
+const myChart = new Chart(document.getElementById('myChart'), { 
+    type: 'bar', 
+    data: students_data, 
+    options: {
+        // onClick: function(c,i) {
+        //     console.log(c);
+        //     console.log(i);
+        // }
+    } 
+});
+</script>
+
 {% endblock %}

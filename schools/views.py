@@ -1,7 +1,7 @@
 
 from multiprocessing import context
 from django.shortcuts import render
-from django.db.models import Count
+from django.db.models import Count, Q
 
 from .models import School, KeralaSchool
 # Create your views here.
@@ -11,15 +11,13 @@ def home(request):
     # context['states'] = School.objects.values('state').distinct().annotate(count=Count('state'))
     if 'school_name' in request.GET:
         context['schools'] = School.objects.filter(
-            school_name__icontains = request.GET['school_name'])[:100]
+            Q(school_name__icontains = request.GET['school_name'])|
+            Q(udise_code=request.GET['school_name']))[:100]
+    else:
+        context['total_schools']=School.objects.count()
+        context['states']=School.objects.values('state').distinct().annotate(count=Count('state'))
     return render(request,'home.html',context) #{'states':states_and_count})
 
-def states(request):
-
-    # states with school count
-    states_and_count = School.objects.values('state').distinct().annotate(count=Count('state'))
-    return render(request,'schools/states.html',{'states':states_and_count, 
-        'total_schools':School.objects.count()})
 
 def districts(request, state):
     # districts with school count

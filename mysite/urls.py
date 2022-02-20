@@ -19,6 +19,8 @@ from django.utils import timezone
 from django.contrib.sitemaps import GenericSitemap
 from django.contrib.sitemaps import views as sitemaps_views
 from django.views.generic import TemplateView
+from django.contrib.auth import views as auth_views
+
 from schools.models import School, KeralaSchool
 from schools.views import home
 
@@ -37,6 +39,7 @@ urlpatterns = [
     path('', home, name="home"),
     path('schools/', include('schools.urls')),
 
+    path('accounts/login/', auth_views.LoginView.as_view(redirect_authenticated_user=True), name='login'),
     path('sitemap.xml', sitemaps_views.index, {'sitemaps': my_sitemaps},
          name='django.contrib.sitemaps.views.index'),
     path('sitemap-<section>.xml', sitemaps_views.sitemap, {'sitemaps': my_sitemaps},

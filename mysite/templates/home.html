@@ -11,7 +11,7 @@
         font-weight: 300
     }
 .height {
-    height: 100vh
+    height: 20vh
 }
 
 .search {
@@ -21,19 +21,13 @@
 
 .search input {
     height: 60px;
-    text-indent: 25px;
+    text-indent: 5px;
     border: 2px solid #d6d4d4
 }
 
 .search input:focus {
     box-shadow: none;
     border: 2px solid blue
-}
-
-.search .fa-search {
-    position: absolute;
-    top: 20px;
-    left: 16px
 }
 
 .search button {
@@ -48,20 +42,22 @@
 {% endblock %}
 
 {% block content %}
-<div class="row d-flex justify-content-center align-items-center">
+<div class="row height d-flex justify-content-center align-items-center">
     <div class="col-md-8">
         <div class="search"> 
             <form method="get" action=".">
-                <input type="text" class="form-control" value="{{request.GET.school_name}}" pattern=".{3,}" title="3 characters minimum" required name="school_name" placeholder="Name of School/Location"> 
+                <input type="text" class="form-control" value="{{request.GET.school_name}}" 
+                    pattern=".{3,}" title="3 characters minimum" required name="school_name" 
+                    placeholder="School Name/UDISE"> 
                 <button type="submit" class="btn btn-primary">Search</button> 
             </form>
         </div>
     </div>
 </div>
 
-<p style="text-align: center;">or you can browse <a href="{% url 'schools:states' %}">states</a></p>
 <!-- <canvas id="myChart" height="300"></canvas> -->
 <hr>
+{% if request.GET.school_name %}
 <ol class="list-group list-group-numbered list-group-flush"></ol>
 {% for school in schools %}
     <li class="list-group-item d-flex justify-content-between align-items-start">
@@ -75,9 +71,31 @@
         <span class="badge bg-secondary rounded-pill">{{school.udise_code}}</span></small>
         </div>
     </li>
-    {% endfor %}
+{%empty%}
+    {% if request.GET.school_name %}
+    <div class="alert alert-warning">School Not Found</div>
+    {% endif %}
+{% endfor %}
 </ol>
-        
+
+{% else %}
+
+<div class="row">
+	<div class="col-sm-12 col-md-6 offset-md-3">
+	  <ul class="list-group">
+		<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+		  <strong><small>Statewise Schools({{total_schools}})</small></strong>
+		</li>
+		{% for state_schools in states %}
+		<li class="list-group-item d-flex justify-content-between align-items-center">
+		  <small>{{forloop.counter}}. <a href="{% url 'schools:districts' state_schools.state|slugify %}">{{state_schools.state|title}}</a></small>
+		  <span class="badge bg-primary rounded-pill">{{state_schools.count}}</span>
+		</li>
+		{% endfor %}
+	  </ul>
+	</div>
+</div>
+{% endif %}
 {% endblock %}
 
 

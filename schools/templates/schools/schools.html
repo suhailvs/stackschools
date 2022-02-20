@@ -6,7 +6,7 @@
 {% block content %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'schools:states' %}">India</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
     <li class="breadcrumb-item"><a href="{% url 'schools:districts' state %}">{{state|title}}</a></li>
     <li class="breadcrumb-item"><a href="{% url 'schools:sub_districts' state district %}">{{district|title}}</a></li>
     <li class="breadcrumb-item active" aria-current="page">{{sub_district|title}}</li>

@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}{{school.school_name}} - {% endblock %}
 {% block metatitle %}{{school.school_name}} {{school.district }}{% endblock %}
-{% block metadescription %}{{school.school_name}}, {{school.state }}, {{school.district }}{% endblock %}
+{% block metadescription %}{{school.school_name}}, {{school.block }}, {{school.district }}, {{school.state }}{% endblock %}
 
 {% block extracss %}
 <style>
@@ -24,7 +24,7 @@
 <!-- BREADCRUMB -->
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'schools:states' %}">India</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
         <li class="breadcrumb-item"><a
                 href="{% url 'schools:districts' school.state|slugify %}">{{school.state|title}}</a></li>
         <li class="breadcrumb-item"><a

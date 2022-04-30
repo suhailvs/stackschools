@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stackschools-app
+  labels:
+    app: stackschools
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: stackschools
+  template:
+    metadata:
+      labels:
+        app: stackschools
+    spec:
+      containers:
+        - image: suhailvs/stackschools:latest
+          name: stackschools
+          envFrom:
+          - secretRef:
+              name: stackschools-secret4
+          ports:
+            - containerPort: 8000
+              name: gunicorn

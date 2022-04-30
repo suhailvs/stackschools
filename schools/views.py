@@ -3,7 +3,7 @@ from multiprocessing import context
 from django.shortcuts import render
 from django.db.models import Count, Q
 
-from .models import School, KeralaSchool
+from .models import School, KeralaSchool, GeneralSettings
 # Create your views here.
 
 def home(request):
@@ -31,6 +31,12 @@ def districts(request, state):
 
 def sub_districts(request,state,district):
     # sub_districts with school count
+    obj,created = GeneralSettings.objects.get_or_create(
+        key=district, defaults= {'value':0}
+    )
+    obj.value = int(obj.value)+1
+    obj.save()
+    
     sub_districts_and_count = School.objects.filter(
         state__icontains=state.split('-')[0],
         district=district

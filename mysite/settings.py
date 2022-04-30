@@ -83,11 +83,14 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
+dbpath = BASE_DIR / 'db.sqlite3'
+if config('DB_PATH'):
+    dbpath = config('DB_PATH')
+    
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': dbpath,
     }
 }
 
@@ -99,7 +102,7 @@ if config('DB_NAME'):
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': config('DB_HOST'),
-        'PORT': '5432',
+        'PORT': config('DB_PORT'),
       } 
     }
 
@@ -138,17 +141,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'https://stackschools.com/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [
-    BASE_DIR / 'mysite' / 'static',
-]
-MEDIA_ROOT = BASE_DIR / 'media'
+STATIC_ROOT = '/app/staticfiles'
+# STATICFILES_DIRS = [
+#     '/app/static',
+# ]
+MEDIA_ROOT = '/app/media'
 MEDIA_URL = '/media/'
 
 # Custom Django auth settings
@@ -191,3 +194,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CONN_MAX_AGE = 60

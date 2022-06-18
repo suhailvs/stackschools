@@ -7,7 +7,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 
-from .models import School, KeralaSchool
+from .models import School, KeralaSchool, Profile
 # Create your views here.
 
 class SignUpForm(UserCreationForm):
@@ -23,8 +23,11 @@ def signup(request):
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
+            Profile.objects.create(user=user)
+            user.email = user.username
+            user.save()
             login(request, user)
-            return redirect('home')
+            return redirect('feeds:feeds')
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})

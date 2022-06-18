@@ -3,7 +3,7 @@
 {% load feedtags %}
 <li class="list-group-item" feed-id="{{ feed.pk }}" csrf="{{ csrf_token }}">
   <div class="media post">
-    <a href="{# url 'core:user_detail' user=feed.user.id #}">
+    <a href="{% url 'core:user_detail' user=feed.user.id %}">
       <img class="mr-3" src="{{ feed.user.email|gravatar_url:50 }}" alt="{{feed.user.get_full_name}}">
     </a>
     
@@ -11,7 +11,7 @@
       {% if feed.user == user %}
         <i class="fa fa-remove remove-feed" title="Click to remove this feed"></i>
       {% endif %}
-      <a href="{# url 'core:user_detail' user=feed.user.id #}">{{ feed.user.profile.get_screen_name }}</a> <small class="text-muted">{{ feed.date|naturaltime }}</small><br>
+      <a href="{% url 'core:user_detail' user=feed.user.id %}">{{ feed.user.profile.get_screen_name }}</a> <small class="text-muted">{{ feed.date|naturaltime }}</small><br>
       <p style="margin:0;">{{ feed.linkfy_post|safe }}</p>
       <div class="interaction">
         {% if user in feed.get_likers %}

@@ -1,0 +1,93 @@
+<!-- To show list of students and teachers tab for both user_datas -->
+{% extends 'base.html' %}
+
+{% load feedtags %}
+
+{% block extracss %}
+<style type="text/css">
+  .media {
+    margin-top: 10px
+  }
+  .teacher {
+    background: #f4f1de
+  }
+  .inactive {
+    border: 1px solid red
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<form method='GET'>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" name='q' value='{{ request.GET.q }}' placeholder="Filter by name">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit">Search...</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<br>
+{% if request.GET.q %}
+<form method='GET'>
+    filtered user_datas by <span class="badge badge-secondary">{{request.GET.q}}</span> - 
+    <button class="badge badge-warning">clear filter</button>
+</form>
+{% endif %}
+<div class="row">
+{% for user_data in users %}
+  <div class="col-sm-3">
+    <div class="media">
+      <a href="{% url 'core:user_detail' user=user_data.id %}">
+        <img class="mr-3" src="{{ user_data.email|gravatar_url:50 }}" alt="{{user_data.get_full_name}}">
+      </a>
+      <div class="media-body" style="font-size: 12px">
+        <a href="{% url 'core:user_detail' user=user_data.id %}">{{user_data.username}}</a><br>
+        {% if user_data.first_name %}{{user_data.get_full_name}}<br>{% endif %}
+        
+      </div>
+    </div>
+  </div>
+{% empty %}
+  <div class="col-sm-6"><p class="text-warning">No user matched your search.</p></div>
+{% endfor %}
+</div>
+
+
+{% if is_paginated %}
+<ul class="pagination float-right">
+{% if page_obj.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+{% else %}
+    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+{% endif %}
+
+{% if page_obj.number|add:'-4' > 1 %}
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a></li>
+{% endif %}
+
+{% for i in page_obj.paginator.page_range %}
+  {% if page_obj.number == i %}
+    <li class="page-item active"><span class="page-link" >{{ i }} <span class="sr-only">(current)</span></span></li>
+  {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+  {% endif %}
+{% endfor %}
+
+{% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+  <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+{% endif %}
+
+{% if page_obj.has_next %}
+  <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+{% else %}
+  <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+{% endif %}
+</ul>
+{% endif %}
+
+
+{% endblock %}

@@ -39,6 +39,7 @@ urlpatterns = [
     path('', home, name="home"),
     path('schools/', include('schools.urls')),
     path('feeds/', include('feeds.urls')),
+    path('users/', include('core.urls')),
     path('notifications/', activities_views.notifications, name='notifications'),
     path('notifications/last/', activities_views.last_notifications, name='last_notifications'),
     path('notifications/check/', activities_views.check_notifications, name='check_notifications'),

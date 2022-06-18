@@ -1,0 +1,21 @@
+{% load humanize %}
+
+{% for comment in feed.get_comments %}
+  <li feed-id="{{ comment.pk }}" csrf="{{ csrf_token }}">
+    <div class="media post">
+    <a href="{% url 'core:user_detail' user=comment.user.id %}">
+      <img class="mr-2" src="{{ comment.user.email|gravatar_url:35 }}" alt="{{comment.user.get_full_name}}">
+    </a>
+    
+    <div class="media-body">
+    {% if comment.user == user %}
+        <i class="fa fa-remove remove-feed" title="Click to remove this comment"></i>
+      {% endif %}
+      <a href="{% url 'core:user_detail' user=comment.user.id %}">{{ comment.user.profile.get_screen_name }}</a> <small  class="text-muted">{{ comment.date|naturaltime }}</small><br>
+    
+      <div>{{ comment.linkfy_post|safe }}</div>
+    </div>
+  </li>
+{% empty %}
+  <li class="empty">Be the first one to comment</li>
+{% endfor %}

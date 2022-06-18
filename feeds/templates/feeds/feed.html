@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block extracss %}
+<link href="{% static 'css/feeds.css' %}?v=1" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+<h1>Feed</h1>
+{% include 'feeds/partial_feed.html' with feed=feed %}
+{% endblock %}
+
+{% block extrajs %}
+<!-- <script src="{% static 'js/jquery.bullseye-1.0-min.js' %}"></script> -->
+<script src="{% static 'js/feeds.js' %}"></script>
+{% endblock %}

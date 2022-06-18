@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+<!-- <p class="lead">Notifications</p>
+<div class="card">
+  <ul class="list-group list-group-flush">
+    {% for notification in notifications %}
+    <li class="list-group-item">
+      <div class="media">
+        <img src="{{ notification.from_user.profile.get_picture }}" style="width:50px" class="m-2" alt="{{ notification.from_user.username}}">
+        <div class="media-body">
+          <p class="m-1">{{ notification|safe }}</p>
+          <p class="m-1"><small>{{ notification.date|naturaltime }}</small></p>
+        </div>
+      </div>
+      
+    </li>
+    {% empty %}
+      <li class="list-group-item">You have no unread notification</li>
+    {% endfor %}
+  </ul>
+</div>
+ -->
+  <p class="lead">Notifications</p>
+  {% for notification in notifications %}
+  <div class="media">
+    <img src="{{ notification.from_user.profile.get_picture }}" style="width:50px" class="m-2" alt="{{ notification.from_user.username}}">
+    <div class="media-body">
+      <p class="m-1">{{ notification|safe }}</p>
+      <p class="m-1"><small>{{ notification.date|naturaltime }}</small></p>
+    </div>
+  </div>
+  {% empty %}
+  <p class="text-center m-1">You have no unread notification</p>
+  {% endfor %}
+{% endblock %}
+  

@@ -1,0 +1,48 @@
+
+{% load humanize %}
+{% load feedtags %}
+<li class="list-group-item" feed-id="{{ feed.pk }}" csrf="{{ csrf_token }}">
+  <div class="media post">
+    <a href="{% url 'core:user_detail' user=feed.user.id %}">
+      <img class="mr-3" src="{{ feed.user.email|gravatar_url:50 }}" alt="{{feed.user.get_full_name}}">
+    </a>
+    
+    <div class="media-body">
+      {% if feed.user == user %}
+        <i class="fa fa-remove remove-feed" title="Click to remove this feed"></i>
+      {% endif %}
+      <a href="{% url 'core:user_detail' user=feed.user.id %}">{{ feed.user.profile.get_screen_name }}</a> <small class="text-muted">{{ feed.date|naturaltime }}</small><br>
+      <p style="margin:0;">{{ feed.linkfy_post|safe }}</p>
+      <div class="interaction">
+        {% if user in feed.get_likers %}
+          <a href="#" class="like unlike">
+            <i class="fa fa-thumbs-up"></i>
+            <span class="text">Unlike</span>
+            (<span class="like-count">{{ feed.likes }}</span>)
+          </a>
+        {% else %}
+          <a href="#" class="like">
+            <span class="fa fa-thumbs-up"></span>
+            <span class="text">Like</span>
+            (<span class="like-count">{{ feed.likes }}</span>)
+          </a>
+        {% endif %}
+        <a href="#" class="comment">
+          <span class="fa fa-comment"></span> Comment
+          (<span class="comment-count">{{ feed.comments }}</span>)
+        </a>
+      </div>
+      <div class="comments">
+        <form role="form" method="post" action="{{ comment }}" onsubmit="return false">
+          {% csrf_token %}
+          <input type="hidden" name="feed" value="{{ feed.pk }}">
+          <input type="text" class="form-control form-control-sm" placeholder="Write a comment..." name="post" maxlength="255">
+        </form>
+        <ol class="clearfix">
+          {% comment %} Place holder to load feed comments {% endcomment %}
+        </ol>
+      </div>
+      
+    </div>
+  </div>
+</li>

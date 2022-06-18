@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from django.template.defaultfilters import slugify
-
+from activities.models import Notification
 # Create your models here.
 
 
@@ -217,3 +217,51 @@ class User(AbstractUser):
     def is_teacher(self):
         "Is the user a teacher?"
         return self.user_type == 2   
+
+
+class Profile(models.Model):
+    user = models.OneToOneField('User', on_delete=models.CASCADE)
+    def get_screen_name(self):
+        try:
+            if self.user.get_full_name():
+                return self.user.get_full_name()
+            else:
+                return self.user.username
+        except:
+            return self.user.username
+
+    def notify_liked(self, feed):
+        if self.user != feed.user:
+            Notification(notification_type=Notification.LIKED,
+                from_user=self.user,
+                to_user=feed.user,
+                feed=feed).save()
+
+    def unotify_liked(self, feed):
+        if self.user != feed.user:
+            Notification.objects.filter(notification_type=Notification.LIKED,
+                from_user=self.user, 
+                to_user=feed.user, 
+                feed=feed).delete()
+
+    def notify_commented(self, feed):
+        if self.user != feed.user:
+            Notification(notification_type=Notification.COMMENTED,
+                        from_user=self.user,
+                        to_user=feed.user,
+                        feed=feed).save()
+
+    def notify_also_commented(self, feed):
+        comments = feed.get_comments()
+        users = []
+        for comment in comments:
+            if comment.user != self.user and comment.user != feed.user:
+                users.append(comment.user.pk)
+        users = list(set(users))
+        for user in users:
+            Notification(notification_type=Notification.ALSO_COMMENTED,
+                from_user=self.user,
+                to_user=User(id=user),
+                feed=feed).save()
+
+    

@@ -1,10 +1,36 @@
 
-from multiprocessing import context
-from django.shortcuts import render
+
+from django.shortcuts import render, redirect
 from django.db.models import Count, Q
 
-from .models import School, KeralaSchool
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user_model
+
+from .models import School, KeralaSchool, Profile
 # Create your views here.
+
+class SignUpForm(UserCreationForm):
+   class Meta:
+      model = get_user_model()
+      fields = ('username', 'password1', 'password2')
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            Profile.objects.create(user=user)
+            user.email = user.username
+            user.save()
+            login(request, user)
+            return redirect('feeds:feeds')
+    else:
+        form = SignUpForm()
+    return render(request, 'registration/signup.html', {'form': form})
 
 def home(request):
     context = {}

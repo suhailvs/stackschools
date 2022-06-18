@@ -17,7 +17,7 @@
     <link rel="icon" href="{% static 'img/favicon.png' %}">
     
     {% if user.is_authenticated %}
-      <!-- No Google Analytics(user logged in) -->
+      
 
       <link rel="stylesheet" href="{% static 'bootstrap4/bootstrap.min.css' %}">
       <link rel="stylesheet" type="text/css" href="{% static 'fontawesome4/css/font-awesome.min.css' %}">
@@ -31,6 +31,10 @@
         max-width: 800px;
       }
       </style>
+    {% endif %}
+    {% if user.is_superuser %}
+      <!-- No Google Analytics(user is admin user) -->
+    {% else %}
       {% google_analytics_status as google_analytics_status_flag %}
       {% if google_analytics_status_flag %}
         <!-- Global site tag (gtag.js) - Google Analytics -->

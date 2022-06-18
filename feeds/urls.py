@@ -15,5 +15,5 @@ urlpatterns = [
     path('update/', views.update, name='update'),
     path('track_comments/', views.track_comments, name='track_comments'),
     path('remove/', views.remove, name='remove_feed'),
-    # path('<int:pk>/', views.feed, name='feed'),
+    path('<int:pk>/', views.feed, name='feed'),
 ]

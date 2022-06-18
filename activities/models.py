@@ -43,17 +43,17 @@ class Activity(models.Model):
 class Notification(models.Model):
     LIKED = 'L'
     COMMENTED = 'C'
-    FAVORITED = 'F'
-    ANSWERED = 'A'
-    ACCEPTED_ANSWER = 'W'
+    # FAVORITED = 'F'
+    # ANSWERED = 'A'
+    # ACCEPTED_ANSWER = 'W'
     # EDITED_ARTICLE = 'E'
     ALSO_COMMENTED = 'S'
     NOTIFICATION_TYPES = (
         (LIKED, 'Liked'),
         (COMMENTED, 'Commented'),
-        (FAVORITED, 'Favorited'),
-        (ANSWERED, 'Answered'),
-        (ACCEPTED_ANSWER, 'Accepted Answer'),
+        # (FAVORITED, 'Favorited'),
+        # (ANSWERED, 'Answered'),
+        # (ACCEPTED_ANSWER, 'Accepted Answer'),
         # (EDITED_ARTICLE, 'Edited Article'),
         (ALSO_COMMENTED, 'Also Commented'),
         )
@@ -84,14 +84,14 @@ class Notification(models.Model):
     def __str__(self):
         if self.notification_type == self.LIKED:
             return self._LIKED_TEMPLATE.format(
-                escape(self.from_user.username),
+                f'users/{self.from_user.pk}', # escape(self.from_user.username),
                 escape(self.from_user.profile.get_screen_name()),
                 self.feed.pk,
                 escape(self.get_summary(self.feed.post))
                 )
         elif self.notification_type == self.COMMENTED:
             return self._COMMENTED_TEMPLATE.format(
-                escape(self.from_user.username),
+                f'users/{self.from_user.pk}', # escape(self.from_user.username),
                 escape(self.from_user.profile.get_screen_name()),
                 self.feed.pk,
                 escape(self.get_summary(self.feed.post))
@@ -126,7 +126,7 @@ class Notification(models.Model):
         #         )
         elif self.notification_type == self.ALSO_COMMENTED:
             return self._ALSO_COMMENTED_TEMPLATE.format(
-                escape(self.from_user.username),
+                f'users/{self.from_user.pk}', # escape(self.from_user.username),
                 escape(self.from_user.profile.get_screen_name()),
                 self.feed.pk,
                 escape(self.get_summary(self.feed.post))

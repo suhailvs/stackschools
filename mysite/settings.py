@@ -47,7 +47,8 @@ INSTALLED_APPS = [
 
     'schools.apps.SchoolsConfig',
     'activities.apps.ActivitiesConfig',
-'feeds.apps.FeedsConfig',
+    'feeds.apps.FeedsConfig',
+    'core.apps.CoreConfig',
 ]
 
 MIDDLEWARE = [

@@ -125,4 +125,9 @@ update pg_database set encoding = pg_char_to_encoding('UTF8') where datname = 's
     ./manage.py migrate
 
 
-## Backup of School Database
+**Load School Database**
+
+	tar xvf data.tar.xz
+	psql -U postgres -d schools < keralaschools.sql
+	psql -U postgres -d schools < schools.sql
+	rm keralaschools.sql schools.sql

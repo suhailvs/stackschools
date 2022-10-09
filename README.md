@@ -115,8 +115,8 @@ sudo apt-get install postgresql postgresql-contrib
 sudo -u postgres psql
 
 ALTER USER postgres WITH PASSWORD 'root';
-create database schools;
-update pg_database set encoding = pg_char_to_encoding('UTF8') where datname = 'schools';
+create database stackschools;
+update pg_database set encoding = pg_char_to_encoding('UTF8') where datname = 'stackschools';
 ```
 
 
@@ -128,6 +128,6 @@ update pg_database set encoding = pg_char_to_encoding('UTF8') where datname = 's
 **Load School Database**
 
 	tar xvf data.tar.xz
-	psql -U postgres -d schools < keralaschools.sql
-	psql -U postgres -d schools < schools.sql
+	psql -U postgres -d stackschools < keralaschools.sql
+	psql -U postgres -d stackschools < schools.sql
 	rm keralaschools.sql schools.sql

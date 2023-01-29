@@ -81,7 +81,7 @@ class StaticGenerator:
             rendered = render_to_string('schools/schools.html',{'schools':school_list, 'district':district,'state':state,
             'sub_district':sub_district})
             os.makedirs(f'{MY_PATH}{FOLDER}{state}/{district}/{sub_district}')
-            print(sub_district)
+            # print(sub_district)
             self.create_file(f'{FOLDER}{state}/{district}/{sub_district}/index.html', rendered)
             self.save_schools_data(school_list)
             
@@ -92,8 +92,9 @@ class StaticGenerator:
             context['total_students']=sum(context['class_students'])
             rendered = render_to_string('schools/school_udise.html',context)
             os.makedirs(f'{MY_PATH}{FOLDER}{school.udise_code}')
-            self.create_file(f'{FOLDER}{school.udise_code}/index.html', rendered)
+            
             name_slug = slugify(school.school_name[:60])
+            self.create_file(f'{FOLDER}{school.udise_code}/index.html', f'<meta http-equiv="refresh" content="0; url=./{name_slug}/" />')
             os.makedirs(f'{MY_PATH}{FOLDER}{school.udise_code}/{name_slug}')
             self.create_file(f'{FOLDER}{school.udise_code}/{name_slug}/index.html', rendered)
 

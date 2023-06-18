@@ -131,3 +131,8 @@ update pg_database set encoding = pg_char_to_encoding('UTF8') where datname = 's
 	psql -U postgres -d stackschools < keralaschools.sql
 	psql -U postgres -d stackschools < schools.sql
 	rm keralaschools.sql schools.sql
+
+
+## Todo
+
+* need to remove `core` app

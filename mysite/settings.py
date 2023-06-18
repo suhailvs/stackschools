@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.sitemaps',
     'crispy_forms',
+    'quiz',
 
     'schools.apps.SchoolsConfig',
     'activities.apps.ActivitiesConfig',
@@ -162,7 +163,7 @@ LOGIN_URL = 'login'
 
 LOGOUT_URL = 'logout'
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'quiz:quiz_list'
 
 LOGOUT_REDIRECT_URL = 'home'
 

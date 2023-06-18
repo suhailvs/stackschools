@@ -1,6 +1,6 @@
 {% load static %}
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
     <a class="navbar-brand" href="{% url 'home' %}">
     <img src="{% static 'img/stackschools.svg' %}" width="30" height="30" class="d-inline-block align-top mr-2" alt="">
     Stack Schools
@@ -20,15 +20,21 @@
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right py-0" aria-labelledby="navbarDropdown" id="notifications_body"></div>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="{% url 'quiz:quiz_list' %}">Quizzes</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{% url 'feeds:feeds' %}">Feeds</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{% url 'home' %}">Schools</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link" href="{% url 'core:users' %}">Users</a>
+        </li> -->
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Sign out</a>
         </li>
-        <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ user.username }}<i class="fa fa-angle-down"></i>
             </a>
@@ -37,7 +43,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'logout' %}">Sign out</a>
             </div>
-        </li>
+        </li> -->
       </ul>
       
     </div>

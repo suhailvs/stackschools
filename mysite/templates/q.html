@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Schools | List of Govt and Private Schools | State Wise School List{% endblock %}
+{% block metadescription %}Schools | List of Govt and Private Schools | State Wise List of Schools | Schools Contact details{% endblock %}
+
+
+{% block content %}
+{% if request.GET.school_name %}
+<ol class="list-group list-group-numbered list-group-flush"></ol>
+{% for school in schools %}
+    <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+        <div class="fw-bold">
+            <a href="{% url 'schools:school_view' school.udise_code %}{{school.school_name|slugify|truncatechars:60}}">
+            <small>{{school.school_name|title}}</small>
+            </a>
+        </div>
+        <small>udise code:
+        <span class="badge bg-secondary rounded-pill">{{school.udise_code}}</span></small>
+        </div>
+    </li>
+{%empty%}
+    {% if request.GET.school_name %}
+    <div class="alert alert-warning">School Not Found.
+        Back to <a href="{% url 'home' %}">Home</a> </div>
+    {% endif %}
+{% endfor %}
+</ol>
+{% endif %}
+{% endblock %}
+

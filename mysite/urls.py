@@ -22,7 +22,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 
 from schools.models import School, KeralaSchool
-from schools.views import home, signup
+from schools.views import home, signup, q
 from activities import views as activities_views
 class CustomDateSitemap(GenericSitemap):
     def lastmod(self, item):
@@ -37,6 +37,7 @@ my_sitemaps = {
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name="home"),
+    path('q/', q, name="q"),
     path('schools/', include('schools.urls')),
     path('feeds/', include('feeds.urls')),
     path('users/', include('core.urls')),

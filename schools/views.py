@@ -32,17 +32,15 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
 
-def home(request):
-    context = {}
-    # context['states'] = School.objects.values('state').distinct().annotate(count=Count('state'))
+def q(request):    
     if 'school_name' in request.GET:
-        context['schools'] = School.objects.filter(
+        schools = School.objects.filter(
             Q(school_name__icontains = request.GET['school_name'])|
             Q(udise_code=request.GET['school_name']))[:100]
-    else:
-        context['total_schools']=School.objects.count()
-        context['states']=School.objects.values('state').distinct().annotate(count=Count('state'))
-    return render(request,'home.html',context) #{'states':states_and_count})
+        return render(request,'q.html',{"schools":schools})
+    
+def home(request):
+    return render(request,'home.html') #{'states':states_and_count})
 
 
 def districts(request, state):

@@ -1,5 +1,6 @@
 from django.db import models
-
+from django.urls import reverse
+from django.template.defaultfilters import slugify
 # Create your models here.
 class BPCollege(models.Model):
     code = models.IntegerField()
@@ -22,4 +23,8 @@ class BPCollege(models.Model):
     parttime = models.BooleanField(default=True)
     ielts = models.SmallIntegerField(null=True)
     toefl = models.SmallIntegerField(null=True)
+
+    def get_absolute_url(self):        
+        url = reverse('bachelorsportal:college_view', kwargs={'code' : self.code})
+        return f"{url}{slugify(self.title)[:60]}"
 

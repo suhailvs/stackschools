@@ -18,4 +18,9 @@ class BachelorsPortalTest(TestCase):
         
         self.assertContains(response, 'LLB (Hons) Law with Psychology')
         self.assertContains(response, 'University of Essex Online')
+
+        self.assertContains(response, '4856')
+        self.assertContains(response, '48')
+        self.assertContains(response, 'The LLB (Hons) Law with Psychology programme from')
+
         

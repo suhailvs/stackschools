@@ -3,6 +3,6 @@ from . import views
 
 app_name = 'bachelorsportal'
 urlpatterns = [
-    re_path(r'^(?P<code>\d{6})/',views.college_view, name='college_view'),
+    re_path(r'^(?P<code>\d{4,6})/',views.college_view, name='college_view'),
     path('', views.home, name="home"),
 ]

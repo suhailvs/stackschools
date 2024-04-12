@@ -22,14 +22,20 @@ from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 from schools.views import home
 from schools.models import School, KeralaSchool
+from bachelorsportal.models import BPCollege
+
 class CustomDateSitemap(GenericSitemap):
     def lastmod(self, item):
         return timezone.datetime(2021, 12, 20, 20, 28, 1, tzinfo=timezone.utc)
+class CustomDateSitemap2(GenericSitemap):
+    def lastmod(self, item):
+        return timezone.datetime(2024, 4, 11, 20, 28, 1, tzinfo=timezone.utc)
 
 
 my_sitemaps = {
     'schools': CustomDateSitemap({'queryset': School.objects.order_by('id'),'date_field': None}),
-    'kerala_schools': CustomDateSitemap({ 'queryset': KeralaSchool.objects.order_by('id'),'date_field': None})
+    'kerala_schools': CustomDateSitemap({ 'queryset': KeralaSchool.objects.order_by('id'),'date_field': None}),
+    'colleges': CustomDateSitemap2({ 'queryset': BPCollege.objects.order_by('id'),'date_field': None}),
 }
 
 urlpatterns = [

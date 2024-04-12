@@ -1,9 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from .models import BPCollege
 
 def home(request):
-    return HttpResponse('home')
+    return render(request, "bachelorsportal/home.html")
 
 
 def college_view(request, code):   

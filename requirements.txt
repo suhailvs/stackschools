@@ -1,8 +1,4 @@
-Django
-# Django==4.0.5
-django-crispy-forms==1.9.2
-Pillow==8.1.0
+Django==4.2.11
 psycopg2==2.9.3
 python-decouple==3.4
 bleach==3.3.0
-django-mcq==0.4

@@ -20,10 +20,8 @@ from django.contrib.sitemaps import GenericSitemap
 from django.contrib.sitemaps import views as sitemaps_views
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
-
+from schools.views import home
 from schools.models import School, KeralaSchool
-from schools.views import home, signup
-from activities import views as activities_views
 class CustomDateSitemap(GenericSitemap):
     def lastmod(self, item):
         return timezone.datetime(2021, 12, 20, 20, 28, 1, tzinfo=timezone.utc)
@@ -38,16 +36,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name="home"),
     path('schools/', include('schools.urls')),
-    path('feeds/', include('feeds.urls')),
-    path('users/', include('core.urls')),
-    path('quiz/', include('quiz.urls')),
-    path('notifications/', activities_views.notifications, name='notifications'),
-    path('notifications/last/', activities_views.last_notifications, name='last_notifications'),
-    path('notifications/check/', activities_views.check_notifications, name='check_notifications'),
+    path('bp/', include('bachelorsportal.urls')),
 
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/login/', auth_views.LoginView.as_view(redirect_authenticated_user=True), name='login'),
-    path('accounts/signup/', signup, name='signup'),
+    # path('accounts/signup/', signup, name='signup'),
 
     path('sitemap.xml', sitemaps_views.index, {'sitemaps': my_sitemaps},
          name='django.contrib.sitemaps.views.index'),

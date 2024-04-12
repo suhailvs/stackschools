@@ -43,13 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'django.contrib.sitemaps',
-    'crispy_forms',
-    'quiz',
 
     'schools.apps.SchoolsConfig',
-    'activities.apps.ActivitiesConfig',
-    'feeds.apps.FeedsConfig',
-    'core.apps.CoreConfig',
+    'bachelorsportal',
 ]
 
 MIDDLEWARE = [
@@ -163,7 +159,7 @@ LOGIN_URL = 'login'
 
 LOGOUT_URL = 'logout'
 
-LOGIN_REDIRECT_URL = 'quiz:quiz_list'
+# LOGIN_REDIRECT_URL = 'quiz:quiz_list'
 
 LOGOUT_REDIRECT_URL = 'home'
 
@@ -179,9 +175,6 @@ MESSAGE_TAGS = {
 }
 
 
-# Third party apps configuration
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 # google email setup

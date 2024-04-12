@@ -7,30 +7,13 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 
-from .models import School, KeralaSchool, Profile
+from .models import School, KeralaSchool
 # Create your views here.
 
 class SignUpForm(UserCreationForm):
    class Meta:
       model = get_user_model()
       fields = ('username', 'password1', 'password2')
-
-def signup(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            Profile.objects.create(user=user)
-            user.email = user.username
-            user.save()
-            login(request, user)
-            return redirect('feeds:feeds')
-    else:
-        form = SignUpForm()
-    return render(request, 'registration/signup.html', {'form': form})
 
 def home(request):
     context = {}
@@ -44,6 +27,11 @@ def home(request):
         context['states']=School.objects.values('state').distinct().annotate(count=Count('state'))
     return render(request,'home.html',context) #{'states':states_and_count})
 
+def states(request):
+    context = {}
+    context['states']=School.objects.values('state').distinct().annotate(count=Count('state'))
+    context['total_schools']=School.objects.count()
+    return render(request,'schools/states.html',context) #{'states':states_and_count})
 
 def districts(request, state):
     # districts with school count

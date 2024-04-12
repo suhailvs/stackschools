@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 app_name = 'schools'
 urlpatterns = [
 	# if blank show districts(Thissur, palakkad...)
-	# path('', school_views.states, name='states'),	
+	path('', school_views.states, name='states'),	
 	# if digit, view school information
 	re_path(r'^(?P<code>\d{5})/',school_views.school_view_kerala, name='school_view_kerala'),
 

@@ -56,6 +56,7 @@ Django conf:
 		ServerName stackschools.com
 		ServerAlias www.stackschools.com
 
+		AliasMatch ^/sitemap(.*) /var/www/stackschools/sitemaps/sitemap$1
 		Alias /robots.txt /var/www/stackschools/staticfiles/robots.txt
 		Alias /favicon.ico /var/www/stackschools/staticfiles/favicon.ico
 		Alias /media/ /var/www/stackschools/media/
@@ -141,7 +142,7 @@ update pg_database set encoding = pg_char_to_encoding('UTF8') where datname = 's
 
 	./manage.py generate_sitemap
 
-zip media folder, then commit and push
+zip `sitemaps` folder inside `media`, then commit and push
 https://github.com/just-work/django-sitemap-generate
 
 ## Todo

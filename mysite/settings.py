@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.sitemaps',
 
+    'ajax_datatable',
+    
     'schools.apps.SchoolsConfig',
     'bachelorsportal',
 ]

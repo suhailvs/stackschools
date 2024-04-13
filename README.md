@@ -134,6 +134,7 @@ update pg_database set encoding = pg_char_to_encoding('UTF8') where datname = 's
 
 **Dump database**
 
+	sudo su postgres
 	pg_dump --data-only -d stackschools -t <table_name> > /tmp/file.sql
 
 ## Todo

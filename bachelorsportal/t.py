@@ -3,7 +3,7 @@ Usage:
 
     ./manage.py shell
     >>> from bachelorsportal import t
-    >>> t.load_datas()
+    >>> t.load_datas('engineering_&_technology_not_formatted_2100.json')
 """
 
 from .models import BPCollege
@@ -98,25 +98,28 @@ class FormatJson:
             "university": self.func["getUniversityLink"]["func"]["getDescription"],
             "logo": logo,
             "location": self.getloc(),
-            'fullonline': self.func["isFullyOnline"],
-            'online': self.func["isOnline"],
-            'oncampus': self.func["isOnCampus"],
+            'fullonline': self.func["isFullyOnline"] if "isFullyOnline" in self.func else None,
+            'online': self.func["isOnline"] if "isOnline" in self.func else None,
+            'oncampus': self.func["isOnCampus"] if "isOnCampus" in self.func else None,
             # 'isBlended': self.func["isBlended"],
-            'fulltime': self.func["isFullTime"],
-            'parttime': self.func["isPartTime"],
-            "ielts": self.func["getEnglishRequirements"]['func']['getIELTS'],
-            "toefl": self.func["getEnglishRequirements"]['func']['getTOEFLInternet'],            
+            'fulltime': self.func["isFullTime"] if "isFullTime" in self.func else None,
+            'parttime': self.func["isPartTime"] if "isPartTime" in self.func else None,
+            "ielts": self.func["getEnglishRequirements"]['func']['getIELTS'] if "getEnglishRequirements" in self.func else None,
+            "toefl": self.func["getEnglishRequirements"]['func']['getTOEFLInternet'] if "getEnglishRequirements" in self.func else None,            
         }
-def load_datas():
+def load_datas(fname):
     import pandas as pd
-    fname = "bachelorsportal/uk_not_formatted_8000.json"
+    # fname = "bachelorsportal/uk_not_formatted_8000.json"
     df = pd.read_json(fname)
     for index, c in df.iterrows():
         data = dict(c)
         print(index,data["id"],'\n','='*10)
         colleage_formatter = FormatJson(data["card"])
         d = colleage_formatter.format()
-        
+        fee_int=None
+        fee_int_currency=''
+        fee_nat=None
+        fee_nat_currency=''
         for fee in d['fee']:
             if fee['target']=='international':
                 fee_int = fee['amount']
@@ -124,31 +127,28 @@ def load_datas():
             elif fee['target']=='national':
                 fee_nat = fee['amount']
                 fee_nat_currency = fee['currency']
-        
-        BPCollege.objects.create(
-            code = data["id"],
-            title = d['title'],
-            degree = d['degree'],
-            summary = d['summary'],
-            duration = d['duration']['amount'],
-            university = d['university'],
-            university_logo = d['logo'],
-            city = d['location']['city'],
-            country = d['location']['country'],
-            fullonline = d['fullonline'],
-            online = d['online'],
-            oncampus = d['oncampus'],
-            fulltime = d['fulltime'],
-            parttime = d['parttime'],
-            ielts = d['ielts'],
-            toefl = d['toefl'],
-            fee_int=fee_int,
-            fee_int_currency=fee_int_currency,
-            fee_nat=fee_nat,
-            fee_nat_currency=fee_nat_currency,
-        )
-
-
-
-def a():
-    load_datas()
+        if BPCollege.objects.filter(code=data['id']).exists():
+            print("item exists")
+        else:
+            BPCollege.objects.create(
+                code = data["id"],
+                title = d['title'],
+                degree = d['degree'],
+                summary = d['summary'],
+                duration = d['duration']['amount'],
+                university = d['university'],
+                university_logo = d['logo'],
+                city = d['location']['city'],
+                country = d['location']['country'],
+                fullonline = d['fullonline'],
+                online = d['online'],
+                oncampus = d['oncampus'],
+                fulltime = d['fulltime'],
+                parttime = d['parttime'],
+                ielts = d['ielts'],
+                toefl = d['toefl'],
+                fee_int=fee_int,
+                fee_int_currency=fee_int_currency,
+                fee_nat=fee_nat,
+                fee_nat_currency=fee_nat_currency,
+            )

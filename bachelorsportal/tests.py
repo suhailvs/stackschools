@@ -7,9 +7,13 @@ class BachelorsPortalTest(TestCase):
     def setUp(self):
         self.client = Client()
 
-    # def test_site_root_url_works(self):
-    #     response = self.client.get(reverse("bachelorsportal:home"))
-    #     self.assertEqual(response.status_code, 200)
+    
+    def test_colleges(self):
+        jk_link = reverse('bachelorsportal:home')
+        response = self.client.get(jk_link)
+        self.assertEqual(response.status_code, 200)
+        
+        self.assertContains(response, 'Colleges in Europe')
     
     def test_college_view(self):
         jk_link = reverse('bachelorsportal:college_view', kwargs={'code':'237799'})
@@ -22,5 +26,7 @@ class BachelorsPortalTest(TestCase):
         self.assertContains(response, '4856')
         self.assertContains(response, '48')
         self.assertContains(response, 'The LLB (Hons) Law with Psychology programme from')
+    
+
 
         

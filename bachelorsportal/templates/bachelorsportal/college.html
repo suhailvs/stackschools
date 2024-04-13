@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-<!-- <a href="{% url 'bachelorsportal:home' %}" class="btn btn-secondary">Back to List of Colleges</a><br><br> -->
+<a href="{% url 'bachelorsportal:home' %}" class="btn btn-secondary">Back to List of Colleges</a><br><br>
 <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary" style="background: #ccc;">    
     <span class="badge bg-dark">{% if data.fulltime %}Full Time{%elif data.parttime%}Part Time{% endif %}</span>
     <span class="badge bg-secondary">{% if data.online %}Online{%elif data.oncampus%}On Campus{% endif %}</span>

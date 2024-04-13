@@ -137,6 +137,13 @@ update pg_database set encoding = pg_char_to_encoding('UTF8') where datname = 's
 	sudo su postgres
 	pg_dump --data-only -d stackschools -t <table_name> > /tmp/file.sql
 
+**Upload sitemaps**
+
+	./manage.py generate_sitemap
+
+zip media folder, then commit and push
+https://github.com/just-work/django-sitemap-generate
+
 ## Todo
 
 * need to remove `core` app

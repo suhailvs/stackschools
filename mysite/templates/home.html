@@ -54,9 +54,11 @@
         </div>
     </div>
 </div>
-
-<!-- <canvas id="myChart" height="300"></canvas> -->
+<div class="d-grid gap-2 col-6 mx-auto">
+<a href="{% url 'bachelorsportal:home' %}" class="btn btn-primary">Colleges</a>
+</div><!-- <canvas id="myChart" height="300"></canvas> -->
 <hr>
+
 {% if request.GET.school_name %}
 <ol class="list-group list-group-numbered list-group-flush"></ol>
 {% for school in schools %}

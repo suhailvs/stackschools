@@ -26,5 +26,5 @@ class BPCollege(models.Model):
 
     def get_absolute_url(self):        
         url = reverse('bachelorsportal:college_view', kwargs={'code' : self.code})
-        return f"{url}{slugify(self.title)[:60]}"
+        return f"{url}{slugify(self.title)[:50]}-{slugify(self.university)[:30]}-{slugify(self.city)}"
 

@@ -2,14 +2,24 @@ from django.shortcuts import render
 from .models import BPCollege
 from ajax_datatable.views import AjaxDatatableView
 from django.contrib.auth.models import Permission
+from schools.models import GeneralSettings
 
 def home(request):
     return render(request, "bachelorsportal/home.html")
 
 def college_view(request, code):   
     # college = df.loc[df["id"] == int(code)]["card"]
+    obj,created = GeneralSettings.objects.get_or_create(key='college')
+    if created:
+        obj.value = 1
+    else:
+        try:
+            obj.value=int(obj.value)+1
+        except:
+            obj.value=1
+    obj.save()
     data = BPCollege.objects.get(code=code)
-    return render(request, "bachelorsportal/college.html", {"data":data})
+    return render(request, "bachelorsportal/college.html", {"data":data,'hits':obj.value})
 
 class BPAjaxDatatableView(AjaxDatatableView):
     model = BPCollege

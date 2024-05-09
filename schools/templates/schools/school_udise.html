@@ -17,7 +17,9 @@
     border-radius: 0.25rem;
 }
 </style>
-
+{% if school.lat %}
+    <link href="{% static 'leaflet/leaflet.css' %}" rel="stylesheet"/>
+{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -39,7 +41,7 @@
 
 
 <div id="main_div">
-    <h2>{{school.school_name|title}}</h2>
+    <h2>{{school.school_name|upper}}</h2>
     <div class="row">
         <div class="col-md-6 col-sm-12">
             <p class="lead">UDISE Code: <span class="badge bg-secondary">{{school.udise_code}}</span></p>
@@ -49,13 +51,16 @@
         </div>
     </div>
 
+    {% if school.lat %}
+      <div id="osm-map" style="height: 280px;"></div><hr>
+    {% endif %}
 
     <div class="row">
         <div class="col-md-6 col-sm-12">
             <div class="alert alert-info" role="alert">
                 <h4>Address</h4>
                 <address>
-                    {{school.school_name|title}}<br>
+                    {{school.school_name|upper}}<br>
                     {{school.village|title}} (pincode: {{school.pincode}})<br>
                     {{school.cluster|title}}<br>
                     {{school.block|title}}<br>
@@ -259,6 +264,32 @@
 
 
 {% block extrajs %}
+{% if school.location or school.lat %}
+<!--https://stackoverflow.com/a/41753557/2351696-->
+
+<!-- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script> -->
+<script src="{% static 'leaflet/leaflet.js' %}"></script>
+<script>
+// Create Leaflet map on map element.
+let map = L.map(document.getElementById('osm-map'));
+
+// Add OSM tile layer to the Leaflet map.
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+// Target's GPS coordinates.
+let target = L.latLng({{school.lat}}, {{school.lon}});
+
+// Set map's center to target with zoom 14.
+map.setView(target, 17);
+
+// Place a marker on the same location.
+L.marker(target).addTo(map);
+</script>
+{% endif %}
+
+
 <script src="{% static 'chart.min.js' %}"></script>
 <script>
     const students_data = {

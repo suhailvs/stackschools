@@ -56,16 +56,13 @@ Django conf:
 		ServerName stackschools.com
 		ServerAlias www.stackschools.com
 
-		AliasMatch ^/sitemap(.*) /var/www/stackschools/sitemaps/sitemap$1
+		AliasMatch ^/sitemap-(.*) /var/www/stackschools/sitemaps/sitemap-$1
 		Alias /robots.txt /var/www/stackschools/staticfiles/robots.txt
+		Alias /ads.txt /var/www/stackschools/ads.txt
 		Alias /favicon.ico /var/www/stackschools/staticfiles/favicon.ico
 		Alias /media/ /var/www/stackschools/media/
 		Alias /static/ /var/www/stackschools/staticfiles/
-		Alias /docsstudent /var/www/stackschools/docs/student/_build/html/
-
-		<Directory /var/www/stackschools/docs>
-        Require all granted
-        </Directory>
+		
 		<Directory /var/www/stackschools/staticfiles>
 		Require all granted
 		</Directory>
@@ -76,8 +73,8 @@ Django conf:
 		WSGIDaemonProcess stackschoolapp python-home=/var/www/stackschools/env python-path=/var/www/stackschools/
 		WSGIProcessGroup stackschoolapp
 		WSGIScriptAlias / /var/www/stackschools/mysite/wsgi.py
-		ErrorLog /var/www/stackschools/media/error.log
-		CustomLog /var/www/stackschools/media/access.log combined
+		# ErrorLog /var/www/stackschools/media/error.log
+		# CustomLog /var/www/stackschools/media/access.log combined
 	</VirtualHost>
 
 

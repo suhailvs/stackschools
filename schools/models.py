@@ -145,7 +145,8 @@ class School(models.Model):
     other_rooms = models.SmallIntegerField()
     enrolment_of_the_students = models.CharField(max_length=60)
     total_teachers = models.SmallIntegerField()
-
+    lat = models.CharField(max_length=30, blank=True)
+    lon = models.CharField(max_length=30, blank=True)
     def get_absolute_url(self):
         
         url = reverse('schools:school_view', kwargs={'code' : self.udise_code})

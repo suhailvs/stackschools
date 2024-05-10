@@ -34,8 +34,7 @@ Install Apache:
 
 Create virtual and install django:
 
-	$ pip3 install virtualenv
-	$ virtualenv env
+	$ python3 -m venv env
 	$ source ./env/bin/activate
 	$ apt install libpq-dev
 	$ pip install -r requirements.txt
@@ -114,7 +113,6 @@ sudo -u postgres psql
 
 ALTER USER postgres WITH PASSWORD 'root';
 create database stackschools;
-update pg_database set encoding = pg_char_to_encoding('UTF8') where datname = 'stackschools';
 ```
 
 
@@ -125,10 +123,13 @@ update pg_database set encoding = pg_char_to_encoding('UTF8') where datname = 's
 
 **Load School Database**
 
-	tar xvf data.tar.xz
+	git clone https://github.com/sta-k/stackschools_datas
+	cd stackschools_datas
+	tar xvf data_sql.tar.xz
 	psql -U postgres -d stackschools < keralaschools.sql
 	psql -U postgres -d stackschools < schools.sql
-	rm keralaschools.sql schools.sql
+	psql -U postgres -d stackschools < colleges.sql
+	rm keralaschools.sql schools.sql colleges.sql
 
 **Dump database**
 
@@ -140,8 +141,5 @@ update pg_database set encoding = pg_char_to_encoding('UTF8') where datname = 's
 	./manage.py generate_sitemap
 
 zip `sitemaps` folder inside `media`, then commit and push
+
 https://github.com/just-work/django-sitemap-generate
-
-## Todo
-
-* need to remove `core` app

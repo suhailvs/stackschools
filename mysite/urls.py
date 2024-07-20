@@ -43,6 +43,8 @@ urlpatterns = [
     path('', home, name="home"),
     path('schools/', include('schools.urls')),
     path('bp/', include('bachelorsportal.urls')),
+    path('map/', include('myapp.urls')),
+
 
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/login/', auth_views.LoginView.as_view(redirect_authenticated_user=True), name='login'),

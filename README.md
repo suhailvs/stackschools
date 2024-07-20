@@ -143,3 +143,24 @@ create database stackschools;
 zip `sitemaps` folder inside `media`, then commit and push
 
 https://github.com/just-work/django-sitemap-generate
+
+
+## PostGIS
+
+#### installing gdal
+
+	$ sudo apt install gdal-bin
+	$ sudo apt install postgis
+
+settings.py:
+
+	# installed apps
+	"django.contrib.gis",
+    "rest_framework",
+    "rest_framework_gis",
+
+	# database
+	'ENGINE': 'django.contrib.gis.db.backends.postgis',
+
+
+https://leafletjs.com/examples/choropleth/example.html

@@ -18,4 +18,19 @@ def a():
         print(udise.count(),kerala.count(), block)
     
 
-a()
+
+def b():
+    from django.contrib.gis.geos import Point
+    from schools.models import KeralaSchool
+    step = 1000
+    total = KeralaSchool.objects.count()
+    for i in range(0,total,step):
+        print('going to update range:',i,i+step)
+        objs =[obj for obj in KeralaSchool.objects.order_by('id')[i:i+step]]
+        for obj in objs:
+            if obj.lon:
+                obj.GEOMETRY=Point(float(obj.lon), float(obj.lat))
+            if obj.location:
+                loc = obj.get_location()
+                obj.GEOMETRY2 = Point(float(loc[1]), float(loc[0]))
+        print(KeralaSchool.objects.bulk_update(objs, ["GEOMETRY","GEOMETRY2"]))

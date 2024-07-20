@@ -1,0 +1,58 @@
+
+{% load humanize %}
+{% if notifications %}
+<div class="list-group">
+
+{% for notification in notifications %}
+  <li class="list-group-item">
+    <div class="row">
+        <div class="col-2">
+            <img src="{{ notification.from_user.email|gravatar_url:50 }}" style="width:30px" class="mr-3" alt="{{ notification.from_user.username}}">
+        </div>
+        <div class="col-10">
+            <div class="text-dark small">{{ notification|safe }}</div>
+            <div class="text-muted small mt-1">{{ notification.date|naturaltime }}</div>
+        </div>
+    </div>
+  </li>
+{% endfor %}
+
+</div>
+{% else %}
+<div class="dropdown-menu-header">
+    You have no unread notification
+</div>
+{% endif %}
+  
+<div class="dropdown-menu-footer">
+    <a href="{% url 'notifications' %}" class="text-muted">Show all notifications</a>
+</div>
+<!-- 
+<div class="dropdown-menu-header">
+      4 New Notifications
+  </div>
+  
+      <a href="#" class="list-group-item  list-group-item-action">
+          <div class="row no-gutters align-items-center">
+              <div class="col-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              </div>
+              <div class="col-10">
+                  <div class="text-dark">Update completed</div>
+                  <div class="text-muted small mt-1">Restart server 12 to complete the update.</div>
+                  <div class="text-muted small mt-1">2h ago</div>
+              </div>
+          </div>
+      </a>
+      <a href="#" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">List group item heading</h5>
+            <small class="text-muted">3 days ago</small>
+          </div>
+          <p class="mb-1">Some placeholder content in a paragraph.</p>
+          <small class="text-muted">And some muted small print.</small>
+        </a>
+
+  
+  
+ -->

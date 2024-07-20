@@ -73,7 +73,8 @@
     </li>
 {%empty%}
     {% if request.GET.school_name %}
-    <div class="alert alert-warning">School Not Found</div>
+    <div class="alert alert-warning">School Not Found.
+        Back to <a href="{% url 'home' %}">Home</a> </div>
     {% endif %}
 {% endfor %}
 </ol>

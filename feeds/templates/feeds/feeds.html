@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block extracss %}
+<link href="{% static 'css/feeds.css' %}?v=1" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <button type="button" class="btn btn-primary pull-right btn-compose" title="Press Ctrl + P to compose">
+        <i class="fa fa-share"></i> Compose
+      </button>
+      <h1>Feed</h1>
+      <hr>
+
+      <div class="card">
+        <div class="card-header">
+          Latest posts
+        </div>
+        <div class="card-body compose">
+          <h4>Compose a new post</h4>
+          <form role="form" id="compose-form">
+            {% csrf_token %}
+            <input type="hidden" name="last_feed">
+            <div class="form-group">
+              <textarea class="form-control" rows="3" name="post"></textarea>
+            </div>
+            <div class="form-group">
+              <button type="button" class="btn btn-primary btn-post">
+                <span class="fa fa-send"></span> Post
+              </button>
+              <button type="button" class="btn btn-light btn-cancel-compose">Cancel</button>
+              <span class="help-block help-count pull-right">255</span>
+            </div>
+          </form>
+          <div class="stream-update">
+            <a href="#"><span class="new-posts"></span> new posts</a>
+          </div>
+        </div>
+          
+        <ul class="list-group list-group-flush stream">
+          {% for feed in feeds %}
+            {% include 'feeds/partial_feed.html' with feed=feed %}
+          {% endfor %}
+        </ul>
+        <div class="load">
+          <img src="{% static 'img/loading.gif' %}">
+        </div>
+        <form method="get" action="{% url 'feeds:load' %}" id="load_feed" autocomplete="off">
+          <input type="hidden" name="feed_source" id="feed_source" value="all">
+          <input type="hidden" name="from_feed" value="{{ from_feed }}">
+          <input type="hidden" name="page" value="{{ page }}">
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extrajs %}
+<!-- <script src="{% static 'js/jquery.bullseye-1.0-min.js' %}"></script> -->
+<script src="{% static 'js/feeds.js' %}"></script>
+{% endblock %}
+

@@ -1,4 +1,5 @@
-from django.db import models
+# from django.db import models
+from django.contrib.gis.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from django.template.defaultfilters import slugify
@@ -158,6 +159,7 @@ class School(models.Model):
 class KeralaSchool(models.Model):
     
     name = models.CharField(max_length=200)
+    udise_code = models.CharField(max_length=11)
     code = models.IntegerField(unique=True)
     district = models.CharField(max_length=30)
     edu_district = models.CharField(max_length=30)
@@ -182,7 +184,7 @@ class KeralaSchool(models.Model):
     img_src = models.TextField(blank=True)
     mal_address = models.TextField(blank=True)
     website = models.CharField(max_length=200, blank=True)
-
+    GEOMETRY = models.PointField(null=True)
     def __str__(self):
         return self.name
     

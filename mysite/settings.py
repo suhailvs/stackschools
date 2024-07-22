@@ -44,10 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.sitemaps',
 
+    "django.contrib.gis",
+
+    "rest_framework",
+    "rest_framework_gis",
     'ajax_datatable',
     
     'schools.apps.SchoolsConfig',
     'bachelorsportal',
+    'map.apps.MapConfig',
 ]
 
 MIDDLEWARE = [
@@ -96,7 +101,7 @@ DATABASES = {
 if config('DB_NAME'):
     DATABASES = {
       'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis', #'django.db.backends.postgresql',
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),

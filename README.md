@@ -37,6 +37,8 @@ Create virtual and install django:
 	$ python3 -m venv env
 	$ source ./env/bin/activate
 	$ apt install libpq-dev
+	$ apt install gdal-bin
+	$ apt install postgis
 	$ pip install -r requirements.txt
 	$ mkdir media
 	$ chown www-data:www-data media
@@ -143,3 +145,4 @@ create database stackschools;
 zip `sitemaps` folder inside `media`, then commit and push
 
 https://github.com/just-work/django-sitemap-generate
+

@@ -68,9 +68,9 @@ def schools(request,state,district,sub_district):
         'sub_district':sub_district})
 
 def school_view(request,code):
-    udise=code
     # udise school
-    context = {'school':School.objects.get(udise_code=udise)}
+    incr_counter('udise_school')    
+    context = {'school':School.objects.get(udise_code=code)}
     context['class_students']=[int(s) for s in context['school'].enrolment_of_the_students.split(',')]
     context['total_students']=sum(context['class_students'])
     

@@ -32,7 +32,7 @@
       }
       </style>
     {% endif %}
-    {% if user.is_active %}
+    {% if user.is_authenticated %}
       <!-- No Google Analytics(user is admin user) -->
     {% else %}      
       <!-- Google tag (gtag.js) -->
@@ -51,9 +51,7 @@
 
   <body>
     {% block body %}
-    {% if user.is_authenticated %}
-    {% include '_navbar.html' %}
-    {% else %}
+    
     <nav class="navbar navbar-light bg-light border-bottom">
       <div class="container">
         <a class="navbar-brand" href="{% url 'home' %}">
@@ -65,7 +63,6 @@
         </div>
       </div>
     </nav>
-    {% endif %}
     <div class="container mt-3">
     {% block content %}
     {% endblock %}
@@ -84,13 +81,8 @@
     <!-- JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{% static 'jquery/jquery-3.3.1.min.js' %}"></script>
-    {% if user.is_authenticated %}
-    <script src="{% static 'bootstrap4/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/notifications.js' %}"></script>
-    {% else %}
+    <script src="{% static 'jquery/jquery-3.3.1.min.js' %}"></script>    
     <script src="{% static 'bootstrap5/bootstrap.bundle.min.js' %}"></script>
-    {% endif %}
 
     {% block extrajs %}
     {% endblock %}

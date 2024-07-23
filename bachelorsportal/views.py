@@ -21,7 +21,7 @@ def college_view(request, code):
     # college = df.loc[df["id"] == int(code)]["card"]
     incr_counter('college')
     data = BPCollege.objects.get(code=code)
-    return render(request, "bachelorsportal/college.html", {"data":data,'hits':obj.value})
+    return render(request, "bachelorsportal/college.html", {"data":data})
 
 class BPAjaxDatatableView(AjaxDatatableView):
     model = BPCollege

@@ -6,7 +6,7 @@ from django.db.models import Count, Q
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
-
+from bachelorsportal.views import incr_counter
 from .models import School, KeralaSchool
 # Create your views here.
 
@@ -79,4 +79,5 @@ def school_view(request,code):
 
 def school_view_kerala(request,code):
     # kerala school
+    incr_counter('kerala_school')
     return render(request,'schools/school.html',{'school':KeralaSchool.objects.get(code = code)})

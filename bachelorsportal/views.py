@@ -3,13 +3,8 @@ from .models import BPCollege
 from ajax_datatable.views import AjaxDatatableView
 from django.contrib.auth.models import Permission
 from schools.models import GeneralSettings
-
-def home(request):
-    return render(request, "bachelorsportal/home.html")
-
-def college_view(request, code):   
-    # college = df.loc[df["id"] == int(code)]["card"]
-    obj,created = GeneralSettings.objects.get_or_create(key='college')
+def incr_counter(key):
+    obj,created = GeneralSettings.objects.get_or_create(key=key)
     if created:
         obj.value = 1
     else:
@@ -18,6 +13,13 @@ def college_view(request, code):
         except:
             obj.value=1
     obj.save()
+
+def home(request):
+    return render(request, "bachelorsportal/home.html")
+
+def college_view(request, code):   
+    # college = df.loc[df["id"] == int(code)]["card"]
+    incr_counter('college')
     data = BPCollege.objects.get(code=code)
     return render(request, "bachelorsportal/college.html", {"data":data,'hits':obj.value})
 

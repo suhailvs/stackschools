@@ -86,8 +86,64 @@
         </tr>
       </tbody>
     </table>
+
+
+
+ 
     </div>
-    {% include 'google_adsense.html' %}
+
+     <!-- Class Wise School Strength -->
+  <div class="card">
+    <div class="card-header"> <strong>Staff Fixation Strength Details </strong></div>
+    <div class="card-body">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>Designation Name</th>
+            <th>Strength</th>
+            <th>Year</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for staff in school.staffstrength.all %}
+          <tr>
+            <td>{{staff.designation}}</td>
+            <td>{{staff.strength}} </td>
+            <td>{{staff.year}} </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <hr>
+  <!-- Class Wise School Strength -->
+  <div class="card">
+    <div class="card-header"> <strong>Employee Details </strong></div>
+    <div class="card-body">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>Sl No.</th>
+            <th>Name of Employee</th>
+            <th>Designation</th>
+            <th>Date of Joining</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for staff in school.staffs.all %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{staff.name}} </td>
+            <td>{{staff.designation}} </td>
+            <td>{{staff.date_of_join}} </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+    {# include 'google_adsense.html' #}
   </div>  
 </div>
 <hr>

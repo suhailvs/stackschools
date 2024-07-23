@@ -200,6 +200,18 @@ class KeralaSchool(models.Model):
         url = reverse('schools:school_view_kerala', kwargs={'code' : self.code})
         return f"{url}{slugify(self.name)[:60]}"
 
+class StaffDesig(models.Model):
+    school = models.ForeignKey('KeralaSchool',on_delete=models.CASCADE,related_name='staffstrength')
+    year = models.CharField(max_length =30)
+    designation = models.CharField(max_length=200)
+    strength = models.IntegerField()
+
+class StaffDetails(models.Model):
+    school = models.ForeignKey('KeralaSchool',on_delete=models.CASCADE,related_name='staffs')
+    name = models.CharField(max_length=200)
+    designation = models.CharField(max_length=200)
+    date_of_join = models.DateField()
+
 class User(AbstractUser):
     USER_TYPE_CHOICES = (
       (0, 'others'), #admin, superadmin etc, so ./manage.py createsuperuser will return default

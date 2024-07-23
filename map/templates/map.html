@@ -5,7 +5,7 @@
 <head>
   <title>Markers Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet/dist/leaflet.css" crossorigin="" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
   <style>
     html,
     body {
@@ -22,9 +22,58 @@
 
 <body>
   <div id="map"></div>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js" crossorigin=""></script>
-  <script type="text/javascript" src="{% static 'district.js' %}"></script>
-  <script src="{% static 'map.js' %}" defer></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <!--<script type="text/javascript" src="{% static 'district.js' %}"></script>
+  <script src="{% static 'map.js' %}"></script>
+  -->
+  <script>
+const copy = "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a>";
+const layer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxNativeZoom: 18, maxZoom: 20, attribution: copy, });
+const map = L.map("map", {
+  layers: [layer],
+  minZoom: 8,
+  maxBounds: [
+    //south west
+    [8.89, 70.47],
+    //north east
+    [12.27, 80.65]
+  ],
+});
+
+
+map.locate()
+  .on("locationfound", (e) => map.setView(e.latlng, 14))
+  .on("locationerror", () => map.setView([10.59, 76.45], 14));
+
+// // Create a layer group
+let districtsGroup = L.layerGroup();
+let markersGroup = L.layerGroup();
+// // We invoke this flow, every time the user stops moving on the map.
+async function load_markers() {
+  const markers_url = `/map/api/markers/?in_bbox=${map.getBounds().toBBoxString()}`;
+  const response = await fetch(markers_url);
+  const geojson = await response.json();
+  return geojson;
+}
+
+async function render_markers() {
+  console.log(map.getBounds())
+  console.log(map.getZoom())
+  map.removeLayer(districtsGroup);
+  map.removeLayer(markersGroup);
+  if (map.getZoom() > 13) {
+    const markers = await load_markers();
+    L.geoJSON(markers).bindPopup((layer) => {
+      let title = layer.feature.properties.name;
+      let code = layer.feature.properties.code;
+      return `${title} <br> <a href="/schools/${code}/" target="_blank">view</a>`
+    }).addTo(markersGroup);
+    markersGroup.addTo(map);
+  }
+}
+
+map.on("moveend", render_markers);
+  </script>
 </body>
 
 </html>

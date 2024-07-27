@@ -14,6 +14,18 @@ from pathlib import Path
 from decouple import config
 from django.contrib.messages import constants as messages
 
+import sentry_sdk
+
+sentry_sdk.init(
+    dsn="https://a3d85d406575195466de9138d120feea@o4504168670363648.ingest.us.sentry.io/4507672123146240",
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    traces_sample_rate=1.0,
+    # Set profiles_sample_rate to 1.0 to profile 100%
+    # of sampled transactions.
+    # We recommend adjusting this value in production.
+    profiles_sample_rate=1.0,
+)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 

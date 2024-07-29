@@ -1,4 +1,6 @@
-from django.views.generic.base import TemplateView
+
+from django.shortcuts import render
+from bachelorsportal.views import incr_counter
 
 from schools.models import KeralaSchool
 
@@ -15,5 +17,7 @@ class MarkerViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = KeralaSchool.objects.all()
     serializer_class = MarkerSerializer
 
-class MarkersMapView(TemplateView):
-    template_name = "map.html"
+def home(request):
+    # kerala school
+    incr_counter('map')
+    return render(request,'map/home.html')

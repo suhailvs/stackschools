@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 class HomePageTest(unittest.TestCase):  
     def setUp(self):  
         self.browser = webdriver.Firefox()  
-        self.base_url = "https://stackschools.com/"
+        self.base_url = "https://stackschools.com/" # "http://localhost:8000/" #
 
     def tearDown(self):  
         self.browser.quit()

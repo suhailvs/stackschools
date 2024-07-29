@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
-from .views import MarkersMapView, MarkerViewSet
+from .views import home, MarkerViewSet
 
 app_name = "map"
 
@@ -9,5 +9,5 @@ router.register(r"markers", MarkerViewSet)
 
 urlpatterns = [
     path("api/", include(router.urls)),
-    path("", MarkersMapView.as_view()),
+    path("", home, name='home'),
 ]

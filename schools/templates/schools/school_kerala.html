@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{kschool.name}} - {% endblock %}
+{% block metatitle %}{{kschool.name}} {{kschool.district }}{% endblock %}
+{% block metadescription %}{{kschool.name}}, {{kschool.sub_district }}, {{kschool.district }}{% endblock %}
+
+{% block extracss %}
+  {% if kschool.location or kschool.lat %}
+    <!-- <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet"/> -->
+    <link href="{% static 'leaflet/leaflet.css' %}" rel="stylesheet"/>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+<a href="{% url 'map:home' %}" class="btn btn-secondary">Kerala Schools Map</a><br><br>
+{% comment %}
+<nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'schools:districts' %}">Districts</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'schools:sub_districts' kschool.district %}">{{kschool.district}}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'schools:schools' kschool.district school.sub_district %}">{{kschool.sub_district}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{kschool.name}}</li>
+      </ol>
+    </nav>
+{% endcomment %}
+<!-- School info -->
+{% include "schools/_kerala.html" %}
+<hr>
+
+
+{% endblock %}
+
+
+{% block extrajs %}
+
+{% if kschool.location or kschool.lat %}
+<!--https://stackoverflow.com/a/41753557/2351696-->
+
+<!-- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script> -->
+<script src="{% static 'leaflet/leaflet.js' %}"></script>
+<script>
+// Create Leaflet map on map element.
+let map = L.map(document.getElementById('osm-map'));
+
+// Add OSM tile layer to the Leaflet map.
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+// Target's GPS coordinates.
+// let target = L.latLng({{kschool.lat}}, {{kschool.lon}});
+{% if kschool.location %}
+  // use data scraped from https://sametham.kite.kerala.gov.in/20001
+  let target = L.latLng({{kschool.get_location.0}}, {{kschool.get_location.1}});
+{% else %}
+  // use data scraped from https://schoolwiki.in/index.php?title=20001
+  let target = L.latLng({{kschool.lat}}, {{kschool.lon}});
+{% endif %}
+
+// Set map's center to target with zoom 14.
+map.setView(target, 14);
+
+// Place a marker on the same location.
+L.marker(target).addTo(map);
+</script>
+{% endif %}
+
+{% endblock %}
+

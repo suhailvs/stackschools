@@ -80,4 +80,4 @@ def school_view(request,code):
 def school_view_kerala(request,code):
     # kerala school
     incr_counter('kerala_school')
-    return render(request,'schools/school.html',{'school':KeralaSchool.objects.get(code = code)})
+    return render(request,'schools/school_kerala.html',{'kschool':KeralaSchool.objects.get(code = code)})

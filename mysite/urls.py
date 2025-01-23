@@ -29,7 +29,7 @@ class CustomDateSitemap(GenericSitemap):
         return timezone.datetime(2021, 12, 20, 20, 28, 1, tzinfo=timezone.utc)
 class CustomDateSitemap2(GenericSitemap):
     def lastmod(self, item):
-        return timezone.datetime(2024, 4, 11, 20, 28, 1, tzinfo=timezone.utc)
+        return timezone.datetime(2025, 1, 22, 20, 28, 1, tzinfo=timezone.utc)
 
 
 my_sitemaps = {
@@ -50,9 +50,9 @@ urlpatterns = [
     path('accounts/login/', auth_views.LoginView.as_view(redirect_authenticated_user=True), name='login'),
     # path('accounts/signup/', signup, name='signup'),
 
-    path('sitemap.xml', sitemaps_views.index, {'sitemaps': my_sitemaps},
-         name='django.contrib.sitemaps.views.index'),
-    path('sitemap-<section>.xml', sitemaps_views.sitemap, {'sitemaps': my_sitemaps},
-         name='django.contrib.sitemaps.views.sitemap'),
+    # path('sitemap.xml', sitemaps_views.index, {'sitemaps': my_sitemaps},
+    #      name='django.contrib.sitemaps.views.index'),
+    # path('sitemap-<section>.xml', sitemaps_views.sitemap, {'sitemaps': my_sitemaps},
+    #      name='django.contrib.sitemaps.views.sitemap'),
 
 ]

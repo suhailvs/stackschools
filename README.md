@@ -138,11 +138,30 @@ create database stackschools;
 	sudo su postgres
 	pg_dump --data-only -d stackschools -t <table_name> > /tmp/file.sql
 
-**Upload sitemaps**
+#### Create and upload sitemaps
+
+**update django core sitemap**
+
+since urls in `sitemap.xml` will look like `sitemap-college.xml?p=3` so need to change it to `sitemap-college3.xml`, to fix edit django file `env/lib/python3.12/site-packages/django/contrib/sitemaps/views.py` line 85 with::
+
+	SitemapIndexItem(absolute_url.replace('.xml',f'{page}.xml'), site_lastmod)
+
+**update mysite/urls.py**
+
+uncomment sitempas in `mysite/urls.py`::
+
+	path('sitemap.xml', sitemaps_views.index, {'sitemaps': my_sitemaps},
+         name='django.contrib.sitemaps.views.index'),
+    path('sitemap-<section>.xml', sitemaps_views.sitemap, {'sitemaps': my_sitemaps},
+         name='django.contrib.sitemaps.views.sitemap'),
+     
+**generate sitemap**
 
 	./manage.py generate_sitemap
 
-zip `sitemaps` folder inside `media`, then commit and push
+zip `sitemaps` folder inside `media`, then copy it to `github.com/sta-k/stackschools_datas`. then commit and push
 
-https://github.com/just-work/django-sitemap-generate
+**upload sitemaps to server**
+
+pull the changes in stackschools_datas and move the folder.
 

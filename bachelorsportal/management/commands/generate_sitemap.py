@@ -2,7 +2,7 @@ from django.core.management import BaseCommand
 
 from ._generator import SitemapGenerator
 
-
+# copied from https://github.com/just-work/django-sitemap-generate
 class Command(BaseCommand):
     help = "generate sitemap xml files"
 

@@ -42,29 +42,23 @@
 {% endblock %}
 
 {% block content %}
-
-
-
-
-    
-{% comment %}
 <div class="row height d-flex justify-content-center align-items-center">
     <div class="col-md-8">
-         <div class="search"> 
+        <div class="search"> 
             <form method="get" action=".">
                 <input type="text" class="form-control" value="{{request.GET.school_name}}" 
                     pattern=".{3,}" title="3 characters minimum" required name="school_name" 
                     placeholder="School Name/UDISE"> 
                 <button type="submit" class="btn btn-primary">Search</button> 
             </form>
-        </div> 
-        
+        </div>
+    </div>
 </div>
-{% endcomment %}
 <div class="d-grid gap-2 col-6 mx-auto">
 <a href="{% url 'bachelorsportal:home' %}" class="btn btn-primary">Colleges</a>
 </div><!-- <canvas id="myChart" height="300"></canvas> -->
 <hr>
+
 {% if request.GET.school_name %}
 <ol class="list-group list-group-numbered list-group-flush"></ol>
 {% for school in schools %}

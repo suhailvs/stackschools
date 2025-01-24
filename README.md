@@ -58,6 +58,7 @@ Django conf:
 		ServerAlias www.stackschools.com
 
 		AliasMatch ^/sitemap-(.*) /var/www/stackschools/sitemaps/sitemap-$1
+		Alias /sitemap.xml /var/www/stackschools/sitemaps/sitemap.xml
 		Alias /robots.txt /var/www/stackschools/staticfiles/robots.txt
 		Alias /ads.txt /var/www/stackschools/ads.txt
 		Alias /favicon.ico /var/www/stackschools/staticfiles/favicon.ico
@@ -163,5 +164,5 @@ zip `sitemaps` folder inside `media`, then copy it to `github.com/sta-k/stacksch
 
 **upload sitemaps to server**
 
-pull the changes in stackschools_datas and move the folder.
+pull the changes in stackschools_datas and move folder `sitemaps` to `/var/www/stackschools/`.
 

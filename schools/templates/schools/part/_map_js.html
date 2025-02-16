@@ -1,0 +1,36 @@
+{% load static %}
+
+{% if kschool or school.lat %}
+<!--https://stackoverflow.com/a/41753557/2351696-->
+
+<!-- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script> -->
+<script src="{% static 'leaflet/leaflet.js' %}"></script>
+<script>
+// Create Leaflet map on map element.
+let map = L.map(document.getElementById('osm-map'));
+
+// Add OSM tile layer to the Leaflet map.
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+{% if kschool %}
+    {% if kschool.location %}
+    // use data scraped from https://sametham.kite.kerala.gov.in/20001
+    let target = L.latLng({{kschool.get_location.0}}, {{kschool.get_location.1}});
+    {% else %}
+    // use data scraped from https://schoolwiki.in/index.php?title=20001
+    let target = L.latLng({{kschool.lat}}, {{kschool.lon}});
+    {% endif %}
+{% else %}
+    // Target's GPS coordinates.
+    let target = L.latLng({{school.lat}}, {{school.lon}});
+{% endif %}
+
+// Set map's center to target with zoom 14.
+map.setView(target, 14);
+
+// Place a marker on the same location.
+L.marker(target).addTo(map);
+</script>
+{% endif %}

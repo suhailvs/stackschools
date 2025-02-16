@@ -70,14 +70,16 @@ def schools(request,state,district,sub_district):
 def school_view(request,code):
     # udise school
     incr_counter('udise_school')    
-    context = {'school':School.objects.get(udise_code=code)}
-    context['class_students']=[int(s) for s in context['school'].enrolment_of_the_students.split(',')]
-    context['total_students']=sum(context['class_students'])
-    
+    school = School.objects.get(udise_code=code)
+    context = {'school':school, 'class_students': [int(s) for s in school.enrolment_of_the_students.split(',')]}
+    context['total_students']=sum(context['class_students'])    
+    if school.state=='Kerala':
+        context['kschool']= KeralaSchool.objects.filter(udise_code = school.udise_code).first()
+       
     return render(request,'schools/school_udise.html',context)
 
 
 def school_view_kerala(request,code):
     # kerala school
     incr_counter('kerala_school')
-    return render(request,'schools/school.html',{'school':KeralaSchool.objects.get(code = code)})
+    return render(request,'schools/school.html',{'kschool':KeralaSchool.objects.get(code = code)})

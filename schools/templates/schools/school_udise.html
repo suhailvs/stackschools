@@ -53,7 +53,9 @@
 
     {% if school.lat %}
       <div id="osm-map" style="height: 280px;"></div><br>
+      {% if not kschool %}
       <a href="https://www.google.com/maps/search/?api=1&query={{school.lat}},{{school.lon}}" target="_blank">View on Google Map</a><hr>
+      {% endif %}
     {% endif %}
 
     <div class="row">
@@ -260,7 +262,9 @@
         <th>pre_primary</th>
         <td>{{school.pre_primary}}</td>
     </tr> -->
-    
+    {% if kschool %}
+        {% include 'schools/part/_kschool.html' %}
+    {% endif %}
     {% include 'google_adsense.html' %}
 </div>
 
@@ -270,31 +274,7 @@
 
 
 {% block extrajs %}
-{% if school.location or school.lat %}
-<!--https://stackoverflow.com/a/41753557/2351696-->
-
-<!-- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script> -->
-<script src="{% static 'leaflet/leaflet.js' %}"></script>
-<script>
-// Create Leaflet map on map element.
-let map = L.map(document.getElementById('osm-map'));
-
-// Add OSM tile layer to the Leaflet map.
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
-
-// Target's GPS coordinates.
-let target = L.latLng({{school.lat}}, {{school.lon}});
-
-// Set map's center to target with zoom 14.
-map.setView(target, 17);
-
-// Place a marker on the same location.
-L.marker(target).addTo(map);
-</script>
-{% endif %}
-
+{% include 'schools/part/_map_js.html' %}
 
 <script src="{% static 'chart.min.js' %}"></script>
 <script>

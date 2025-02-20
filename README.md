@@ -126,18 +126,8 @@ create database stackschools;
 
 **Load School Database**
 
-	git clone https://github.com/sta-k/stackschools_datas
-	cd stackschools_datas
-	tar xvf data_sql.tar.xz
-	psql -U postgres -d stackschools < keralaschools.sql
-	psql -U postgres -d stackschools < schools.sql
-	psql -U postgres -d stackschools < colleges.sql
-	rm keralaschools.sql schools.sql colleges.sql
+see https://github.com/sta-k/stackschools_datas
 
-**Dump database**
-
-	sudo su postgres
-	pg_dump --data-only -d stackschools -t <table_name> > /tmp/file.sql
 
 #### Create and upload sitemaps
 

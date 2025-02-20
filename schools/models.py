@@ -96,12 +96,12 @@ class School(models.Model):
     # 11 digit integer may starts with 0, first two digits representing the State 
     # and the following two digits representing the District.
     # select udise_code FROM "schools_school2" where (udise_code ~* '[a-z]') is true
-    udise_code = models.CharField(max_length=11)
+    udise_code = models.CharField(max_length=11,db_index=True)
 
     # address
-    state = models.CharField(max_length=60)
-    district = models.CharField(max_length=60)
-    block = models.CharField(max_length=60)
+    state = models.CharField(max_length=60,db_index=True)
+    district = models.CharField(max_length=60,db_index=True)
+    block = models.CharField(max_length=60,db_index=True)
     cluster = models.CharField(max_length=200)
     village = models.CharField(max_length=60)
     pincode = models.CharField(max_length=6) # six digit pincode
@@ -159,8 +159,8 @@ class School(models.Model):
 class KeralaSchool(models.Model):
     
     name = models.CharField(max_length=200)
-    udise_code = models.CharField(max_length=11)
-    code = models.IntegerField(unique=True)
+    udise_code = models.CharField(max_length=11,db_index=True)
+    code = models.IntegerField(unique=True,db_index=True)
     district = models.CharField(max_length=30)
     edu_district = models.CharField(max_length=30)
     sub_district = models.CharField(max_length=30)

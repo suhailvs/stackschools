@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.template.defaultfilters import slugify
 # Create your models here.
 class BPCollege(models.Model):
-    code = models.IntegerField(unique=True)
+    code = models.IntegerField(unique=True,db_index=True)
     title  = models.CharField(max_length=200)
     degree = models.CharField(max_length=200)
     summary = models.TextField()

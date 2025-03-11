@@ -57,7 +57,7 @@
       <a href="https://www.google.com/maps/search/?api=1&query={{school.lat}},{{school.lon}}" target="_blank">View on Google Map</a><hr>
       {% endif %}
     {% endif %}
-
+    {% include 'google_adsense.html' %}
     <div class="row">
         <div class="col-md-6 col-sm-12">
             <div class="alert alert-info" role="alert">
@@ -265,7 +265,7 @@
     {% if kschool %}
         {% include 'schools/part/_kschool.html' %}
     {% endif %}
-    {% include 'google_adsense.html' %}
+    
 </div>
 
 

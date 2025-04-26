@@ -126,7 +126,7 @@ create database stackschools;
 
 **Load School Database**
 
-see https://github.com/sta-k/stackschools_datas
+see https://github.com/suhailvs/stackschools_datas
 
 
 #### Create and upload sitemaps

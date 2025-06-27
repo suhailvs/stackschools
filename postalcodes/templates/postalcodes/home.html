@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        Enter Postalcode to search
+    </div>
+    <div class="col-md-4">
+        <input class="form-control" id="searchtxt">
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-primary" id="searchbtn">Search</button>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extrajs %}
+<script>
+    $("#searchbtn").click(function() {
+        alert('need to do search')
+    })
+</script>
+{% endblock %}

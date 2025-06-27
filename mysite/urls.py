@@ -23,6 +23,7 @@ from django.contrib.auth import views as auth_views
 from schools.views import home
 from schools.models import School, KeralaSchool
 from bachelorsportal.models import BPCollege
+from postalcodes.models import PostalCode
 
 class CustomDateSitemap(GenericSitemap):
     def lastmod(self, item):
@@ -36,12 +37,14 @@ my_sitemaps = {
     'schools': CustomDateSitemap({'queryset': School.objects.order_by('id'),'date_field': None}),
     'kerala_schools': CustomDateSitemap({ 'queryset': KeralaSchool.objects.order_by('id'),'date_field': None}),
     'colleges': CustomDateSitemap2({ 'queryset': BPCollege.objects.order_by('id'),'date_field': None}),
+    'postalcodes': CustomDateSitemap2({ 'queryset': PostalCode.objects.order_by('id'),'date_field': None}),
 }
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name="home"),
     path('schools/', include('schools.urls')),
+    path('postalcodes/', include('postalcodes.urls')),
     path('bp/', include('bachelorsportal.urls')),
     path('map/', include('map.urls')),
 
@@ -50,9 +53,9 @@ urlpatterns = [
     path('accounts/login/', auth_views.LoginView.as_view(redirect_authenticated_user=True), name='login'),
     # path('accounts/signup/', signup, name='signup'),
 
-    # path('sitemap.xml', sitemaps_views.index, {'sitemaps': my_sitemaps},
-    #      name='django.contrib.sitemaps.views.index'),
-    # path('sitemap-<section>.xml', sitemaps_views.sitemap, {'sitemaps': my_sitemaps},
-    #      name='django.contrib.sitemaps.views.sitemap'),
+    path('sitemap.xml', sitemaps_views.index, {'sitemaps': my_sitemaps},
+         name='django.contrib.sitemaps.views.index'),
+    path('sitemap-<section>.xml', sitemaps_views.sitemap, {'sitemaps': my_sitemaps},
+         name='django.contrib.sitemaps.views.sitemap'),
 
 ]

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{data.0.place}} - {% endblock %}
+{% block metatitle %}{{data.0.place}} {{data.0.admin_name1}}{% endblock %}
+{% block metadescription %}{{data.0.place}}, {{data.0.admin_name1}}, {{data.0.admin_name2}}, {{data.0.admin_name3}}{% endblock %}
+
+
+{% block content %}
+
+<div class="row mb-2">
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <strong class="d-inline-block mb-2 text-primary-emphasis">Postal Code</strong>
+                <h3 class="mb-0">{{data.0.postal_code}}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<table class="table table-bordered">
+    <tr><td>Country</td><td>Place</td><td>State</td><td>Province</td><td>Community</td></tr>
+    {% for d in data %}
+    <tr><td>{{d.country}}</td><td>{{d.place}}</td><td>{{d.admin_name1}}</td><td>{{d.admin_name2}}</td><td>{{d.admin_name3}}</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}
+
+

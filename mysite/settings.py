@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'schools.apps.SchoolsConfig',
     'bachelorsportal',
     'map.apps.MapConfig',
+    'postalcodes.apps.PostalcodesConfig',
 ]
 
 MIDDLEWARE = [

@@ -8,16 +8,7 @@
         <input class="form-control" id="searchtxt">
     </div>
     <div class="col-md-4">
-        <button class="btn btn-primary" id="searchbtn">Search</button>
+        <button class="btn btn-primary" id="searchbtn" onclick="location.href=document.getElementById('searchtxt').value;">Search</button>
     </div>
 </div>
-
-{% endblock %}
-
-{% block extrajs %}
-<script>
-    $("#searchbtn").click(function() {
-        alert('need to do search')
-    })
-</script>
 {% endblock %}

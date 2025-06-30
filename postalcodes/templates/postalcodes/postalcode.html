@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}{{data.0.place}} - {% endblock %}
-{% block metatitle %}{{data.0.place}} {{data.0.admin_name1}}{% endblock %}
+{% load schools_tags %}
+{% block title %}Postal Code details of {{data.0.place}} - {% endblock %}
+{% block metatitle %}Postal Code details of {{data.0.place}} {{data.0.admin_name1}}{% endblock %}
 {% block metadescription %}{{data.0.place}}, {{data.0.admin_name1}}, {{data.0.admin_name2}}, {{data.0.admin_name3}}{% endblock %}
 
 
 {% block content %}
-
 <div class="row mb-2">
-
     <div class="col-md-6">
         <div class="card">
             <div class="card-body">
@@ -18,12 +17,31 @@
         </div>
     </div>
 </div>
-<table class="table table-bordered">
-    <tr><td>Country</td><td>Place</td><td>State</td><td>Province</td><td>Community</td></tr>
+
+<div class="row g-3">
     {% for d in data %}
-    <tr><td>{{d.country}}</td><td>{{d.place}}</td><td>{{d.admin_name1}}</td><td>{{d.admin_name2}}</td><td>{{d.admin_name3}}</td></tr>
+    <div class="col-12 col-md-6">
+      <div class="card shadow-sm rounded-4">
+        <div class="card-header">
+            <h4 class="card-title">{{d.place}}</h4>
+        </div>
+        <!-- <ul class="list-group list-group-flush">
+            <li class="list-group-item"><p class="mb-1"><strong>Place:</strong> {{d.place}}</p></li>
+            <li class="list-group-item"><p class="mb-1"><strong>State:</strong> {{d.admin_name1}}</p></li>
+            <li class="list-group-item"><p class="mb-1"><strong>Province:</strong> {{d.admin_name2}}</p></li>
+            <li class="list-group-item"><p class="mb-0"><strong>Community:</strong> {{d.admin_name3}}</p></li>
+        </ul> -->
+        <div class="card-body">          
+          <p class="mb-1"><strong>Country:</strong> {{d.country|getcountryname}}({{d.country}})</p>
+          <p class="mb-1"><strong>Place:</strong> {{d.place}}</p>
+          <p class="mb-1"><strong>State:</strong> {{d.admin_name1}}</p>
+          <p class="mb-1"><strong>Province:</strong> {{d.admin_name2}}</p>
+          <p class="mb-0"><strong>Community:</strong> {{d.admin_name3}}</p>
+        </div>
+      </div>
+    </div>
     {% endfor %}
-</table>
+  </div>
 {% endblock %}
 
 

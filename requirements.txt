@@ -8,3 +8,7 @@ django-filter~=23.2
 djangorestframework-gis~=1.0.0
 djangorestframework~=3.14.0
 sentry-sdk[django]==2.11.0
+
+
+django-crispy-forms==2.3
+crispy-bootstrap5==2024.2

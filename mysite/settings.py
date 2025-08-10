@@ -58,6 +58,8 @@ INSTALLED_APPS = [
 
     "django.contrib.gis",
 
+    'crispy_forms',
+    'crispy_bootstrap5',
     "rest_framework",
     "rest_framework_gis",
     'ajax_datatable',
@@ -208,3 +210,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+# Third party apps configuration
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

@@ -21,4 +21,13 @@ class PostalCode(models.Model):
 
     def get_absolute_url(self):        
         return reverse('postalcodes:postalcode_view', kwargs={'code' : self.postal_code})
-        
+
+class Edit(models.Model):
+    EDIT_TYPE_CHOICES = (
+      ('add', 'add'),
+      ('edit', 'edit'),
+      ('del', 'delete'),
+    )
+    created_at = models.DateTimeField(auto_now_add = True)
+    postal_code = models.CharField(max_length=20)
+    edit_type = models.CharField(max_length=5, choices=EDIT_TYPE_CHOICES, default='add')

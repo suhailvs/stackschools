@@ -8,7 +8,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 from bachelorsportal.views import incr_counter
 from .models import School, KeralaSchool
+import requests
+from django.http import JsonResponse
+from django.conf import settings
+
 # Create your views here.
+
 
 class SignUpForm(UserCreationForm):
    class Meta:
@@ -67,8 +72,39 @@ def schools(request,state,district,sub_district):
     return render(request,'schools/schools.html',{'schools':school_list, 'district':district,'state':state,
         'sub_district':sub_district})
 
+
+# from django_ratelimit.decorators import ratelimit
+# @ratelimit(key='ip',rate='2/m', block=True)
 def school_view(request,code):
     # udise school
+    # turnstile
+    if request.method != "POST":
+        return render(request,'schools/turnstile.html') #JsonResponse({"error": "Invalid method"}, status=405)
+
+    token = request.POST.get('cf-turnstile-response')
+    remoteip = (
+        request.META.get('HTTP_CF_CONNECTING_IP')
+        or request.META.get('HTTP_X_FORWARDED_FOR')
+        or request.META.get('REMOTE_ADDR')
+    )
+
+    if not token:
+        return JsonResponse({"error": "Missing Turnstile token"}, status=400)
+
+    data = {
+        'secret': settings.TURNSTILE_SECRET_KEY,
+        'response': token,
+        'remoteip': remoteip,
+    }
+
+    verify_url = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
+    resp = requests.post(verify_url, data=data)
+    result = resp.json()
+
+    if not result.get("success"):
+        return JsonResponse({"success": False, "error": result})
+    # end of turnstile
+
     incr_counter('udise_school')    
     school = School.objects.get(udise_code=code)
     context = {'school':school, 'class_students': [int(s) for s in school.enrolment_of_the_students.split(',')]}

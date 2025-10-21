@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Turnstile Test</title>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+	<form id="demo-form" method="post" action=".">{% csrf_token %}
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAAB7oLvHcpSHcJAjj"></div><br>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

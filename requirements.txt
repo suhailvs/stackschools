@@ -12,3 +12,4 @@ sentry-sdk[django]==2.11.0
 
 django-crispy-forms==2.3
 crispy-bootstrap5==2024.2
+requests

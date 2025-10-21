@@ -214,3 +214,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 # Third party apps configuration
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+TURNSTILE_SECRET_KEY = config('TURNSTILE_SECRET_KEY')

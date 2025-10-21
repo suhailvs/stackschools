@@ -6,8 +6,14 @@
 </head>
 <body>
 	<form id="demo-form" method="post" action=".">{% csrf_token %}
-    <div class="cf-turnstile" data-sitekey="0x4AAAAAAB7oLvHcpSHcJAjj"></div><br>
-    <button type="submit">Submit</button>
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAAB7oLvHcpSHcJAjj" data-callback="onTurnstileSuccess"></div><br>
   </form>
+  <script>
+    function onTurnstileSuccess(token) {
+      // Once Turnstile validates, auto-submit the form
+      console.log("Turnstile passed, auto-submitting...");
+      document.getElementById('demo-form').submit();
+    }
+  </script>
 </body>
 </html>

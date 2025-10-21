@@ -8,7 +8,7 @@ class GeoBlockMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        country = request.META.get('CF_IPCOUNTRY')
+        country = request.META.get('HTTP_CF_IPCOUNTRY')
         if country in BLOCKED_COUNTRIES:
             return HttpResponseForbidden("Access denied")
         return self.get_response(request)

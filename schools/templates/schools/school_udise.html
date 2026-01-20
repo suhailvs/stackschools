@@ -42,6 +42,7 @@
 
 <div id="main_div">
     <h2>{{school.school_name|upper}}</h2>
+    {% include 'google_adsense.html' %}
     <div class="row">
         <div class="col-md-6 col-sm-12">
             <p class="lead">UDISE Code: <span class="badge bg-secondary">{{school.udise_code}}</span></p>
@@ -265,7 +266,7 @@
     {% if kschool %}
         {% include 'schools/part/_kschool.html' %}
     {% endif %}
-    {% include 'google_adsense.html' %}
+    
 </div>
 
 

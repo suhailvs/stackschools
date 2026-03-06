@@ -4,15 +4,16 @@ from ajax_datatable.views import AjaxDatatableView
 from django.contrib.auth.models import Permission
 from schools.models import GeneralSettings
 def incr_counter(key):
-    obj,created = GeneralSettings.objects.get_or_create(key=key)
-    if created:
-        obj.value = 1
-    else:
-        try:
-            obj.value=int(obj.value)+1
-        except:
-            obj.value=1
-    obj.save()
+    # obj,created = GeneralSettings.objects.get_or_create(key=key)
+    # if created:
+    #     obj.value = 1
+    # else:
+    #     try:
+    #         obj.value=int(obj.value)+1
+    #     except:
+    #         obj.value=1
+    # obj.save()
+    return key
 
 def home(request):
     return render(request, "bachelorsportal/home.html")

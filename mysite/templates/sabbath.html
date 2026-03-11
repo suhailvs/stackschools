@@ -1,10 +1,86 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Sabbath</title>
-</head>
-<body style="text-align:center;margin-top:100px;">
-    <h1>Site Temporarily Inactive due to Sabbath</h1>
-    <p>Please come back later.</p>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}Sabbath holiday{% endblock %}
+{% block extracss %}{% endblock %}
+
+{% block body %}    
+<div class="container py-3">
+  <header>
+    <div class="p-3 pb-md-4 mx-auto text-center">
+      <div class="alert alert-danger" role="alert">
+      <h1 class="display-4 fw-normal text-body-emphasis">Sabbath - a holy day of rest</h1>
+      <p class="fs-5 text-body-secondary">
+        Our services are currently paused for the Sabbath.
+        We observe the Sabbath from Friday sunset(6:00 pm IST) to Saturday sunset(6:00 pm IST).
+        Full service will resume after Saturday 6:00 pm IST. 
+        Thank you for your understanding.
+      </p>
+      </div>
+    </div>
+  </header>
+  <hr>
+  <main>        
+    <h2 class="display-6 text-center mb-4">Holy Bible Verses</h2>
+    <div class="alert alert-secondary" role="alert">
+      Remember the Sabbath day by keeping it holy.
+      Six days you shall labor and do all your work,
+      but the seventh day is a sabbath to the Lord your God. 
+      On it you shall not do any work, neither you, nor your son 
+      or daughter, nor your male or female servant, nor your animals, 
+      nor any foreigner residing in your towns.
+      <br><strong>Bible - Exodus 20:8-10</strong>
+    </div>
+    <p class="lead">Punishment for doing work on sabbath.</p>
+    <div class="alert alert-secondary" role="alert">
+      Observe the Sabbath, because it is holy to you.
+      Anyone who desecrates it is to be put to death;
+      those who do any work on that day must be cut off from their people.
+      For six days work is to be done, but the seventh day is a day of sabbath rest,
+      holy to the Lord. Whoever does any work on the Sabbath day is to be put to death.
+      <br><strong>Bible - Exodus 31:14-15</strong>
+    </div>
+    <p class="lead">The Sabbath-Breaker Put to Death.</p>
+    <div class="alert alert-secondary" role="alert">
+      While the Israelites were in the wilderness, 
+      a man was found gathering wood on the Sabbath day. 
+      Those who found him gathering wood brought him to Moses and Aaron and the whole assembly, 
+      and they kept him in custody, because it was not clear what should be done to him. 
+      Then the Lord said to Moses, "The man must die. The whole assembly must stone him outside the camp."
+      So the assembly took him outside the camp and stoned him to death, as the Lord commanded Moses.
+      <br><strong>Bible - Numbers 15:32-36</strong>
+    </div>
+    <hr>
+    
+    <h2 class="display-6 text-center mb-4">Sabbatical</h2>
+    <p>The Sabbatical year in the Bible (also called the "Year of Release" or "Shemitah") 
+      is a command from God where the land rests every seventh year, 
+      debts are released, and people trust in God's provision.</p>
+
+    <div class="alert alert-secondary" role="alert">
+      For six years you are to sow your fields and harvest the crops, 
+      but during the seventh year let the land lie unplowed and unused. 
+      Then the poor among your people may get food from it, 
+      and the wild animals may eat what is left. 
+      Do the same with your vineyard and your olive grove.
+      <br><strong>Bible - Exodus 23:10-11</strong>
+    </div>
+    <div class="alert alert-secondary" role="alert">
+      For six years sow your fields, and for six years prune your vineyards and gather their crops. 
+      But in the seventh year the land is to have a year of sabbath rest, 
+      a sabbath to the Lord. Do not sow your fields or prune your vineyards.
+      <br><strong>Bible - Leviticus 25:3-4</strong>
+    </div>
+    <p class="lead">God Promises Provision</p>
+    <div class="alert alert-secondary" role="alert">
+      You may ask, "What will we eat in the seventh year if we do not plant or harvest our crops?"
+      I will send you such a blessing in the sixth year that the land will yield enough for three years.
+      <br><strong>Bible - Leviticus 25:20-21</strong>
+    </div>
+    <p class="lead">Punishment for doing work on sabbatical year.</p>
+    <div class="alert alert-secondary" role="alert">
+      This whole country will become a desolate wasteland, 
+      and these nations will serve the king of Babylon seventy years.
+      <br><strong>Bible - Jeremiah 25:11</strong>
+    </div>
+  </main>      
+</div>
+{% endblock %}

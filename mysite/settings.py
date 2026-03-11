@@ -79,6 +79,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'schools.middleware.GeoBlockMiddleware',
+    'schools.middleware.SabbathMiddleware',    
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -215,3 +216,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 # Third party apps configuration
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+IS_SABBATH = False

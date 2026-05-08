@@ -93,7 +93,7 @@ DATABASES = {
 if config('DB_NAME'):
     DATABASES = {
       'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis', #'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),

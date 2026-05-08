@@ -15,7 +15,7 @@ urls:
 Install Apache:
 ```bash
 apt-get update
-apt-get install python3-pip nginx postgresql postgresql-contrib
+apt-get install python3-pip nginx postgresql postgresql-contrib libpq-dev
 sudo -u postgres psql
 
 ALTER USER postgres WITH PASSWORD 'root';

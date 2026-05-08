@@ -1,4 +1,4 @@
-from django.contrib.gis.db import models
+from django.db import models
 from django.urls import reverse
 # Create your models here.
 class PostalCode(models.Model):
@@ -17,7 +17,7 @@ class PostalCode(models.Model):
     lat = models.CharField(max_length=30, blank=True)
     lon = models.CharField(max_length=30, blank=True)
     accuracy = models.SmallIntegerField(default=0) # accuracy of lat/lng from 1=estimated, 4=geonameid, 6=centroid of addresses or shape
-    GEOMETRY = models.PointField(null=True)
+    # GEOMETRY = models.PointField(null=True)
 
     def get_absolute_url(self):        
         return reverse('postalcodes:postalcode_view', kwargs={'code' : self.postal_code})

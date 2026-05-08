@@ -1,6 +1,6 @@
+from datetime import datetime, timezone
 from django.contrib import admin
 from django.urls import include, path
-from django.utils import timezone
 from django.contrib.sitemaps import GenericSitemap
 from django.contrib.sitemaps import views as sitemaps_views
 from django.contrib.auth import views as auth_views
@@ -8,12 +8,10 @@ from schools.views import home
 from schools.models import School, KeralaSchool
 from bachelorsportal.models import BPCollege
 from postalcodes.models import PostalCode
-
 class CustomDateSitemap(GenericSitemap):
     limit = 2000
     def lastmod(self, item):
-        return timezone.datetime(2021, 12, 20, 20, 28, 1, tzinfo=timezone.utc)
-
+        return datetime(2021, 12, 20, 20, 28, 1, tzinfo=timezone.utc)
 
 my_sitemaps = {
     'schools': CustomDateSitemap({'queryset': School.objects.order_by('id'),'date_field': None}),

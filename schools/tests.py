@@ -63,3 +63,9 @@ class SchoolTest(TestCase):
     def test_keralaschool_page(self):
         response = self.client.get(reverse('schools:school_view_kerala', kwargs={'code':'21008'}))
         self.assertContains(response, '<li class="list-group-item list-group-item-dark">Head Master: <strong>GEETHA DEVI K B</strong></li>')
+    
+    def test_sitemaps(self):
+        response = self.client.get('/sitemap.xml')
+        self.assertEqual(response.status_code, 200)
+        response = self.client.get('/sitemap-schools.xml')
+        self.assertEqual(response.status_code, 200)

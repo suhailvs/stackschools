@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{kschool.name}} - {% endblock %}
+{% block metatitle %}{{kschool.name}} {{kschool.district }}{% endblock %}
+{% block metadescription %}{{kschool.name}}, {{kschool.sub_district }}, {{kschool.district }}{% endblock %}
+
+{% block extracss %}
+  {% if kschool.location or kschool.lat %}
+    <!-- <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet"/> -->
+    <link href="{% static 'leaflet/leaflet.css' %}" rel="stylesheet"/>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+{% include 'schools/part/_kschool.html' %}
+{% endblock %}
+
+
+{% block extrajs %}
+{% include 'schools/part/_map_js.html' %}
+{% endblock %}
+

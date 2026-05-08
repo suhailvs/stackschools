@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Schools{% endblock %}
+{% block metadescription %}{% for state in states %}Schools of {{district.state|title}}, India. {% endfor %}{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-sm-12 col-md-6 offset-md-3">
+	  <ul class="list-group">
+		<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-dark">
+		  <strong><small>Statewise Schools({{total_schools}})</small></strong>
+		</li>
+		{% for state_schools in states %}
+		<li class="list-group-item d-flex justify-content-between align-items-center">
+		  <small>{{forloop.counter}}. <a href="{% url 'schools:districts' state_schools.state|slugify %}">{{state_schools.state|title}}</a></small>
+		  <span class="badge bg-primary rounded-pill">{{state_schools.count}}</span>
+		</li>
+		{% endfor %}
+	  </ul>
+	</div>
+</div>
+{% endblock %}

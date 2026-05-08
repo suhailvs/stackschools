@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        Enter Postalcode to search
+    </div>
+    <div class="col-md-4">
+        <input class="form-control" id="searchtxt">
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-primary" id="searchbtn" onclick="location.href=document.getElementById('searchtxt').value;">Search</button>
+    </div>
+</div>
+{% endblock %}

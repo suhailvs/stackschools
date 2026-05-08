@@ -1,0 +1,103 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">    
+    <meta name="author" content="suhail vs">
+    
+    <meta name="domain" content="stackschools.com"/>
+    <meta name="title" content="{% block metatitle %}Schools of India{% endblock %}" />
+
+    <meta name="description" content="{% block metadescription %}{% endblock %}"/>
+    <meta name="url" content="{% block metaurl %}https://stackschools.com/{% endblock %}" />
+<meta name="google-adsense-account" content="ca-pub-9945071802909384">
+    <title>{% block title %}{% endblock %} - Stack Schools</title>
+    <link rel="icon" href="{% static 'img/favicon.png' %}">
+    
+    {% if user.is_authenticated %}
+      
+
+      <link rel="stylesheet" href="{% static 'bootstrap4/bootstrap.min.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'fontawesome4/css/font-awesome.min.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/notification_dropdown.css' %}">
+    {% else %}
+      <!-- Bootstrap core CSS -->
+      <link rel="stylesheet" href="{% static 'bootstrap5/bootstrap.css' %}">
+      <!-- Custom styles for this template -->  
+      <style>
+        .container {
+        max-width: 800px;
+      }
+      </style>
+    {% endif %}
+    {% if user.is_authenticated %}
+      <!-- No Google Analytics(user is admin user) -->
+    {% else %}      
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-XCGK87SRT5"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-XCGK87SRT5');
+      </script>
+    {% endif %}
+
+    {% block extracss %}{% endblock %}
+  </head>
+
+  <body>
+    {% block body %}
+    
+    <nav class="navbar navbar-light bg-light border-bottom">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+          <img src="{% static 'img/stackschools.svg' %}" alt="" width="30" height="24" class="d-inline-block align-text-top">
+          StackSchools
+        </a>
+        <div class="col-md-3 text-end">
+          <a class="btn btn-primary me-2" href="{% url 'login' %}">Login</a>
+        </div>
+      </div>
+    </nav>
+    <div class="container mt-3">
+      <!--
+      <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">A World Without Money!</h4>
+        <p>
+            There are lots of problems with money: <a href="https://www.community-exchange.org/home/qanda/the-problems-with-conventional-money/">
+            The Problems with Conventional Money</a>.
+            This can solved by simply by keeping track of who receives what from whom we can dispense with the ancient idea of exchange.
+            Please login to : <a href="https://www.community-exchange.org">community-exchange.org</a> to know more.
+        </p>    
+      </div>
+      -->
+    {% block content %}
+    {% endblock %}
+     
+    {% if not user.is_authenticated %}
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <p class="col-md-4 mb-0 text-muted">© 2022 StackSchools, Donams</p>
+        <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            <img src="{% static 'img/stackschools.svg' %}" width="30" height="30" class="d-inline-block align-top mr-2" alt="">
+        </a>
+    
+      </footer>
+    </div>
+    {% endif %}
+
+    <!-- JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static 'jquery/jquery-3.3.1.min.js' %}"></script>    
+    <script src="{% static 'bootstrap5/bootstrap.bundle.min.js' %}"></script>
+
+    {% block extrajs %}
+    {% endblock %}
+
+    {% endblock %}
+  </body>
+</html>

@@ -1,0 +1,116 @@
+<!-- School info -->
+<div class="card">
+    <div class="card-header"> 
+      <h2>{{kschool.name}}</h2>
+      <!-- <a href="http://103.251.43.156/schoolfixation/index.php/Publicview/index/schoolsdetails/{{kschool.url_id}}">{{kschool.name}}</a> -->
+    </div>
+    <div class="card-body">
+      {% if kschool.img_src %}
+      <img src="https://schoolwiki.in{{kschool.img_src}}" class="img-thumbnail" alt="Image of {{kschool.name}}" style="height:300px"><hr>
+      {% endif %}
+  
+      <div class="row">
+        <div class="col-md-7">
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-dark">Head Master: <strong>{{kschool.headmaster_name}}</strong></li>
+            <li class="list-group-item list-group-item-dark">HS Section Phone: <strong>{{kschool.hs_phone}}</strong></li>
+            <li class="list-group-item list-group-item-dark">HS Section Email: <strong>{{kschool.hs_email}}</strong></li>
+            {% if kschool.hse_phone %}
+            <li class="list-group-item list-group-item-dark">HSE Section Phone: <strong>{{kschool.hse_phone}}</strong></li>
+            <li class="list-group-item list-group-item-dark">HSE Section Email: <strong>{{kschool.hse_email}}</strong></li>
+            {% endif %}
+            
+          </ul>
+        </div>
+        <div class="col-md-5">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Address</h5>
+              <p class="text-info">{{kschool.mal_address|safe}}</p>
+              <a href="{{kschool.location}}" class="card-link">View on Google Map</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>      
+  
+      {% if not school %}
+        <div id="osm-map" style="height: 280px;"></div><hr>
+      {% endif %}
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm">
+            <thead>
+            <tr>
+                <th>School Code</th>
+                <th>District</th>
+                <th>Educational District</th>
+                <th>Sub District</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{kschool.code }} </td>
+                <td>{{kschool.district }} </td>
+                <td>{{kschool.edu_district }} </td>
+                <td>{{kschool.sub_district }} </td>
+            </tr>
+            </tbody>
+        </table>   
+      </div>
+  
+      <!-- Class Wise School Strength -->
+      <div class="card">
+        <div class="card-header"> <strong>Staff Fixation Strength Details </strong></div>
+        <div class="card-body">
+          <table class="table table-bordered table-sm">
+            <thead>
+              <tr>
+                <th>Designation Name</th>
+                <th>Strength</th>
+                <th>Year</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for staff in kschool.staffstrength.all %}
+              <tr>
+                <td>{{staff.designation}}</td>
+                <td>{{staff.strength}} </td>
+                <td>{{staff.year}} </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <hr>
+      <!-- Class Wise School Strength -->
+      <div class="card">
+        <div class="card-header"> <strong>Employee Details </strong></div>
+        <div class="card-body">
+          <table class="table table-bordered table-sm">
+            <thead>
+              <tr>
+                <th>Sl No.</th>
+                <th>Name of Employee</th>
+                <th>Designation</th>
+                <th>Date of Joining</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for staff in kschool.staffs.all %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{staff.name}} </td>
+                <td>{{staff.designation}} </td>
+                <td>{{staff.date_of_join}} </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+    </div>  
+</div>
+
+

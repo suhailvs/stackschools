@@ -4,6 +4,11 @@
 [![Django Version](https://img.shields.io/badge/django-6.0.5-brightgreen.svg)](https://djangoproject.com)
 [![CircleCI](https://circleci.com/gh/suhailvs/django-schools.svg?style=svg)](https://circleci.com/gh/suhailvs/django-schools)
 
+urls:
++ asm /schools/32060200110/
++ kerala /schools/21009/
++ limeric_college /bp/351803/
++ /postalcodes/678686/
 
 ## Deployment
 

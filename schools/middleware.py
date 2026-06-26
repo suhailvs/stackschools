@@ -1,9 +1,11 @@
 # middleware.py
 from django.http import HttpResponseForbidden
-from django.conf import settings
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
+IST = ZoneInfo("Asia/Kolkata")
 BLOCKED_COUNTRIES = ['CN', 'SG']
 
 class GeoBlockMiddleware:
@@ -20,9 +22,19 @@ class SabbathMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
+    def _in_sabbath_window(self,now):        
+        weekday = now.weekday()  # Monday=0 ... Friday=4, Saturday=5
+        hour = now.hour
+        if weekday == 4 and hour >= 18:
+            return True
+        if weekday == 5 and hour < 18:
+            return True
+        return False
+    
     def __call__(self, request):
-        if getattr(settings, "IS_SABBATH", True):
-            html = render_to_string("sabbath.html")
+        now = datetime.now(IST)
+        if self._in_sabbath_window(now):            
+            html = render_to_string("sabbath.html", {'now': now.strftime("%A %I:%M %p")})
             return HttpResponse(html, status=503)
         response = self.get_response(request)
         return response

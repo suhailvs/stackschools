@@ -135,4 +135,4 @@ AUTH_USER_MODEL = 'schools.User'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'home'
-IS_SABBATH = False
+# IS_SABBATH = False
